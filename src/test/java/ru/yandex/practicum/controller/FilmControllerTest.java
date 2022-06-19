@@ -14,8 +14,7 @@ public class FilmControllerTest {
     @Test
     public void shouldCreateNewFilm() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 1", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 1", "Test Description", localDateTest, 125);
         try {
             Film newFilm = filmController.crete(film);
             film.setId(newFilm.getId());
@@ -29,8 +28,7 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmNullName() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 2", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 2", "Test Description", localDateTest, 125);
         film.setName(null);
         try {
             Film newFilm = filmController.crete(film);
@@ -44,10 +42,9 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmLongDescription() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
         Film film = new Film(10, "Test Name 4", "Test Description Description Description " +
                 "Description Description Description Description Description Description Description Description " +
-                "Description Description Description Description Description Description", localDateTest, durationTest);
+                "Description Description Description Description Description Description", localDateTest, 125);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -60,10 +57,9 @@ public class FilmControllerTest {
     @Test
     public void shouldCreateNewFilmLongDescriptionTwoHundredSymbols() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
         Film film = new Film(10, "Test Name 5", "Test Description Description Description " +
                 "Description Description Description Description Description Description Description Description " +
-                "Description Description Description Description Description Des", localDateTest, durationTest);
+                "Description Description Description Description Description Des", localDateTest, 125);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -77,8 +73,7 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmIncorrectReleaseDateTime() {
         LocalDate localDateTest = LocalDate.of(1800, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 6", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 6", "Test Description", localDateTest, 125);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -91,8 +86,7 @@ public class FilmControllerTest {
     @Test
     public void shouldCreateNewFilmStartReleaseDateTime() {
         LocalDate localDateTest = LocalDate.of(1895, 12, 28);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 7", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 7", "Test Description", localDateTest, 125);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -106,8 +100,7 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmNegativeDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(-125);
-        Film film = new Film(10, "Test Name 8", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 8", "Test Description", localDateTest, -125);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -120,8 +113,7 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmZeroDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(0);
-        Film film = new Film(10, "Test Name 9", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 9", "Test Description", localDateTest, 0);
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -134,10 +126,9 @@ public class FilmControllerTest {
     @Test
     public void shouldUpdateFilm() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 10", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 10", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 10", "Test Update Description",
-                localDateTest, durationTest);
+                localDateTest, 125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -152,10 +143,9 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateFilmNullName() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 11", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 11", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 11", "Test Update Description",
-                localDateTest, durationTest);
+                localDateTest, 125);
         updateFilm.setName(null);
         try {
             Film newFilm = filmController.crete(film);
@@ -170,12 +160,11 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateFilmLongDescription() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 12", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 12", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 12", "Test Update Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Description Description Description",
-                localDateTest, durationTest);
+                localDateTest, 125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -189,12 +178,11 @@ public class FilmControllerTest {
     @Test
     public void shouldUpdateFilmLongDescriptionTwoHundredSymbols() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 13", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 13", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 13", "Test Update Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Descript",
-                localDateTest, durationTest);
+                localDateTest, 125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -209,10 +197,9 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateFilmIncorrectDate() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 14", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 14", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 14", "Test Update Description",
-                LocalDate.of(1800, 5, 15), durationTest);
+                LocalDate.of(1800, 5, 15), 125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -226,10 +213,9 @@ public class FilmControllerTest {
     @Test
     public void shouldUpdateFilmStartDate() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 15", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 15", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 15", "Test Update Description",
-                LocalDate.of(1895, 12, 28), durationTest);
+                LocalDate.of(1895, 12, 28), 125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -244,10 +230,9 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateNewFilmNegativeDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 16", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 16", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 16", "Test Update Description",
-                localDateTest, Duration.ofMinutes(-125));
+                localDateTest, -125);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -261,10 +246,9 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateNewFilmZeroDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film film = new Film(10, "Test Name 17", "Test Description", localDateTest, durationTest);
+        Film film = new Film(10, "Test Name 17", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 17", "Test Update Description",
-                localDateTest, Duration.ofMinutes(0));
+                localDateTest, 0);
         try {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -278,9 +262,8 @@ public class FilmControllerTest {
     @Test
     public void MustGetListAllMovies() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Duration durationTest = Duration.ofMinutes(125);
-        Film filmOne = new Film(10, "Test Name 18", "Test Description", localDateTest, durationTest);
-        Film filmTwo = new Film(10, "Test Name 19", "Test Description", localDateTest, durationTest);
+        Film filmOne = new Film(10, "Test Name 18", "Test Description", localDateTest, 125);
+        Film filmTwo = new Film(10, "Test Name 19", "Test Description", localDateTest, 125);
         try {
             Film newFilmOne = filmController.crete(filmOne);
             Film newFilmTwo = filmController.crete(filmTwo);

@@ -11,9 +11,9 @@ public class Film {
     String name;
     String description;
     LocalDate releaseDate;
-    Duration duration;
+    int duration;
 
-    public Film (int id, String name, String description, LocalDate releaseDate, Duration duration) {
+    public Film (int id, String name, String description, LocalDate releaseDate, int duration) {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -41,7 +41,7 @@ public class FilmController {
             log.debug("Получен запрос на добавление фильма раньше 28 декабря 1895 года");
             throw new InvalidReleaseDateException("Не верная дата выпуска фильма");
         }
-        if (film.getDuration().toSeconds() <= 0) {
+        if (film.getDuration() <= 0) {
             log.debug("Получен запрос на добавление фильма с отрицательной продолжительностью");
             throw new InvalidDurationException("Продолжительность должна быть больше нуля");
         }
@@ -73,7 +73,7 @@ public class FilmController {
             log.debug("Получен запрос на обновление фильма раньше 28 декабря 1895 года");
             throw new InvalidReleaseDateException("Не верная дата выпуска фильма");
         }
-        if (film.getDuration().toSeconds() <= 0) {
+        if (film.getDuration() <= 0) {
             log.debug("Получен запрос на обновление фильма с отрицательной продолжительностью");
             throw new InvalidDurationException("Продолжительность должна быть больше нуля");
         }
