@@ -2,9 +2,7 @@ package ru.yandex.practicum.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.exceptions.InvalidBirthdayException;
-import ru.yandex.practicum.exceptions.InvalidEmailException;
-import ru.yandex.practicum.exceptions.InvalidLoginException;
+import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.User;
 
 import java.time.LocalDate;
@@ -20,7 +18,7 @@ public class UserControllerTest {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
             Assertions.assertEquals(user, newUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -32,8 +30,8 @@ public class UserControllerTest {
         try {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidEmailException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -44,8 +42,8 @@ public class UserControllerTest {
         try {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidEmailException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -56,8 +54,8 @@ public class UserControllerTest {
         try {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidLoginException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -68,8 +66,8 @@ public class UserControllerTest {
         try {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidLoginException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -82,7 +80,7 @@ public class UserControllerTest {
             user.setId(newUser.getId());
             user.setName(user.getLogin());
             Assertions.assertEquals(user, newUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -94,8 +92,8 @@ public class UserControllerTest {
         try {
             User newUser = userController.create(user);
             user.setId(newUser.getId());
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidBirthdayException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -109,7 +107,7 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email@email.ru", "loginTestUpdate",
                     "name test", birthdayTest);
             Assertions.assertEquals(updateUser, userController.update(updateUser));
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -124,8 +122,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "", "loginTestUpdate",
                     "name test", birthdayTest);
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidEmailException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -139,8 +137,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email.ru", "loginTestUpdate",
                     "name test", birthdayTest);
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidEmailException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -154,8 +152,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email@email.ru", "",
                     "name test", birthdayTest);
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidLoginException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -169,8 +167,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email@email.ru", "loginTest Update",
                     "name test", birthdayTest);
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidLoginException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -184,8 +182,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email@email.ru", "loginTestUpdate",
                     "", birthdayTest);
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidLoginException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -199,8 +197,8 @@ public class UserControllerTest {
             User updateUser = new User(newUser.getId(), "email@email.ru", "loginTestUpdate",
                     "name test", LocalDate.of(2100, 5, 15));
             userController.update(updateUser);
-        } catch (InvalidEmailException | InvalidLoginException | InvalidBirthdayException e) {
-            Assertions.assertEquals(InvalidBirthdayException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 }

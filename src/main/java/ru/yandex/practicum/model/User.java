@@ -1,22 +1,16 @@
 package ru.yandex.practicum.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
+@AllArgsConstructor
 public class User {
-    int id;
-    String email;
-    String login;
-    String name;
-    LocalDate birthday;
-
-    public User (int id, String email, String login, String name, LocalDate birthday) {
-        this.id = id;
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-    }
+    private int id;
+    private String email;
+    private String login;
+    private String name;
+    private LocalDate birthday;
 }

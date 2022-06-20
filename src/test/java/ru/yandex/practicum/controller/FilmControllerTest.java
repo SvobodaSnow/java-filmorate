@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.exceptions.*;
 import ru.yandex.practicum.model.Film;
 
-import java.time.Duration;
 import java.time.LocalDate;
 
 public class FilmControllerTest {
@@ -19,8 +18,7 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             film.setId(newFilm.getId());
             Assertions.assertEquals(film, newFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -33,9 +31,8 @@ public class FilmControllerTest {
         try {
             Film newFilm = filmController.crete(film);
             film.setId(newFilm.getId());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidNameException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -48,9 +45,8 @@ public class FilmControllerTest {
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(ExceedLengthDescriptionException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -64,8 +60,7 @@ public class FilmControllerTest {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
             Assertions.assertEquals(film, newFilmOne);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -77,9 +72,8 @@ public class FilmControllerTest {
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidReleaseDateException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -91,8 +85,7 @@ public class FilmControllerTest {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
             Assertions.assertEquals(film, newFilmOne);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -104,9 +97,8 @@ public class FilmControllerTest {
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidDurationException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -117,9 +109,8 @@ public class FilmControllerTest {
         try {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidDurationException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -134,8 +125,7 @@ public class FilmControllerTest {
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
             Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -151,9 +141,8 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidNameException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -169,9 +158,8 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(ExceedLengthDescriptionException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -188,8 +176,7 @@ public class FilmControllerTest {
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
             Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -204,9 +191,8 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidReleaseDateException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -221,8 +207,7 @@ public class FilmControllerTest {
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
             Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
@@ -237,9 +222,8 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidDurationException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -253,9 +237,8 @@ public class FilmControllerTest {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
-            Assertions.assertEquals(InvalidDurationException.class, e.getClass());
+        } catch (ValidationException e) {
+            Assertions.assertEquals(ValidationException.class, e.getClass());
         }
     }
 
@@ -271,8 +254,7 @@ public class FilmControllerTest {
             filmTwo.setId(newFilmTwo.getId());
             Film[] films = {filmOne, filmTwo};
             Assertions.assertArrayEquals(films, filmController.findAll().toArray());
-        } catch (InvalidNameException | ExceedLengthDescriptionException |
-                InvalidReleaseDateException | InvalidDurationException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
     }
