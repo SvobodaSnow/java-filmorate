@@ -39,6 +39,7 @@ public class UserController {
     @PutMapping("/users")
     public User update(@RequestBody User user) {
         log.info("Получен запрос на обновление пользователя");
+        checkMovieAvailability(users, user);
         checkEmailIsBlank(user);
         checkEmailIsCorrect(user);
         checkLoginIsBlank(user);

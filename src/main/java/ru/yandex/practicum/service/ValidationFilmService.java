@@ -5,6 +5,7 @@ import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Slf4j
 public class ValidationFilmService {
@@ -41,6 +42,13 @@ public class ValidationFilmService {
             log.debug("Получен запрос на добавление фильма с отрицательной продолжительностью. Продолжительность " +
                     film.getDuration());
             throw new ValidationException("Продолжительность должна быть больше нуля");
+        }
+    }
+
+    public static void checkMovieAvailability(Map<Integer, Film> films, Film film) {
+        if (films.get(film.getId()) == null) {
+            log.debug("Получен запрос на обновление фильма с несуществующим ID. ID " + film.getId());
+            throw new ValidationException("Фильма нет в колекции");
         }
     }
 }

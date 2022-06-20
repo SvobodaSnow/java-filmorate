@@ -2,9 +2,11 @@ package ru.yandex.practicum.service;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.exceptions.ValidationException;
+import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Slf4j
 public class ValidationUserService {
@@ -48,7 +50,14 @@ public class ValidationUserService {
         if (user.getBirthday().isAfter(currentDate)) {
             log.debug("Получен запрос на добаление пользователя с днем рождения в будущем. День рождения "
                     + user.getBirthday());
-            throw new ValidationException("День рождения в будующем");
+            throw new ValidationException("День рождения в будущем");
+        }
+    }
+
+    public static void checkMovieAvailability(Map<Integer, User> users, User user) {
+        if (users.get(user.getId()) == null) {
+            log.debug("Получен запрос на обновление пользователя с несуществующим ID. ID " + user.getId());
+            throw new ValidationException("Пользователя нет в списке");
         }
     }
 }

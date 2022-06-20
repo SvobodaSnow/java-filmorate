@@ -40,6 +40,7 @@ public class FilmController {
     @PutMapping("/films")
     public Film update(@RequestBody Film film) {
         log.info("Получен запрос на обновление фильма");
+        checkMovieAvailability(films, film);
         checkFilmName(film);
         checkLengthDescription(film);
         checkDateCreationFilm(film);
