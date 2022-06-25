@@ -2,14 +2,11 @@ package ru.yandex.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.exceptions.*;
 import ru.yandex.practicum.model.Film;
+import ru.yandex.practicum.service.FilmValidationService;
 import ru.yandex.practicum.service.IdGenerator;
 
-import java.time.LocalDate;
 import java.util.*;
-
-import static ru.yandex.practicum.service.ValidationFilmService.*;
 
 
 @Slf4j
@@ -17,6 +14,7 @@ import static ru.yandex.practicum.service.ValidationFilmService.*;
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
     private final IdGenerator idGenerator = new IdGenerator();
+    private final FilmValidationService filmValidationService = new FilmValidationService();
 
     @GetMapping("/films")
     public List<Film> findAll() {
@@ -27,10 +25,10 @@ public class FilmController {
     @PostMapping("/films")
     public Film crete(@RequestBody Film film) {
         log.info("Получен запрос на добавление фильма");
-        checkFilmName(film);
-        checkLengthDescription(film);
-        checkDateCreationFilm(film);
-        CheckFilmDuration(film);
+        filmValidationService.checkFilmName(film);
+        filmValidationService.checkLengthDescription(film);
+        filmValidationService.checkDateCreationFilm(film);
+        filmValidationService.checkFilmDuration(film);
         film.setId(idGenerator.generate());
         films.put(film.getId(), film);
         log.info("Фильм добавлен c ID " + film.getId());
@@ -40,11 +38,11 @@ public class FilmController {
     @PutMapping("/films")
     public Film update(@RequestBody Film film) {
         log.info("Получен запрос на обновление фильма");
-        checkMovieAvailability(films, film);
-        checkFilmName(film);
-        checkLengthDescription(film);
-        checkDateCreationFilm(film);
-        CheckFilmDuration(film);
+        filmValidationService.checkMovieAvailability(films, film);
+        filmValidationService.checkFilmName(film);
+        filmValidationService.checkLengthDescription(film);
+        filmValidationService.checkDateCreationFilm(film);
+        filmValidationService.checkFilmDuration(film);
         films.put(film.getId(), film);
         log.info("Фильм c ID " + film.getId() + " обновлен");
         return film;

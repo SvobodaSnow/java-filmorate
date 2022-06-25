@@ -14,13 +14,9 @@ public class FilmControllerTest {
     public void shouldCreateNewFilm() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
         Film film = new Film(10, "Test Name 1", "Test Description", localDateTest, 125);
-        try {
-            Film newFilm = filmController.crete(film);
-            film.setId(newFilm.getId());
-            Assertions.assertEquals(film, newFilm);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilm = filmController.crete(film);
+        film.setId(newFilm.getId());
+        Assertions.assertEquals(film, newFilm);
     }
 
     @Test
@@ -56,13 +52,9 @@ public class FilmControllerTest {
         Film film = new Film(10, "Test Name 5", "Test Description Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Des", localDateTest, 125);
-        try {
-            Film newFilmOne = filmController.crete(film);
-            film.setId(newFilmOne.getId());
-            Assertions.assertEquals(film, newFilmOne);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilmOne = filmController.crete(film);
+        film.setId(newFilmOne.getId());
+        Assertions.assertEquals(film, newFilmOne);
     }
 
     @Test
@@ -81,13 +73,9 @@ public class FilmControllerTest {
     public void shouldCreateNewFilmStartReleaseDateTime() {
         LocalDate localDateTest = LocalDate.of(1895, 12, 28);
         Film film = new Film(10, "Test Name 7", "Test Description", localDateTest, 125);
-        try {
-            Film newFilmOne = filmController.crete(film);
-            film.setId(newFilmOne.getId());
-            Assertions.assertEquals(film, newFilmOne);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilmOne = filmController.crete(film);
+        film.setId(newFilmOne.getId());
+        Assertions.assertEquals(film, newFilmOne);
     }
 
     @Test
@@ -120,14 +108,10 @@ public class FilmControllerTest {
         Film film = new Film(10, "Test Name 10", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 10", "Test Update Description",
                 localDateTest, 125);
-        try {
-            Film newFilm = filmController.crete(film);
-            updateFilm.setId(newFilm.getId());
-            Film updateNewFilm = filmController.update(updateFilm);
-            Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilm = filmController.crete(film);
+        updateFilm.setId(newFilm.getId());
+        Film updateNewFilm = filmController.update(updateFilm);
+        Assertions.assertEquals(updateFilm, updateNewFilm);
     }
 
     @Test
@@ -171,14 +155,10 @@ public class FilmControllerTest {
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Descript",
                 localDateTest, 125);
-        try {
-            Film newFilm = filmController.crete(film);
-            updateFilm.setId(newFilm.getId());
-            Film updateNewFilm = filmController.update(updateFilm);
-            Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilm = filmController.crete(film);
+        updateFilm.setId(newFilm.getId());
+        Film updateNewFilm = filmController.update(updateFilm);
+        Assertions.assertEquals(updateFilm, updateNewFilm);
     }
 
     @Test
@@ -202,14 +182,10 @@ public class FilmControllerTest {
         Film film = new Film(10, "Test Name 15", "Test Description", localDateTest, 125);
         Film updateFilm = new Film(10, "Test Name 15", "Test Update Description",
                 LocalDate.of(1895, 12, 28), 125);
-        try {
-            Film newFilm = filmController.crete(film);
-            updateFilm.setId(newFilm.getId());
-            Film updateNewFilm = filmController.update(updateFilm);
-            Assertions.assertEquals(updateFilm, updateNewFilm);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilm = filmController.crete(film);
+        updateFilm.setId(newFilm.getId());
+        Film updateNewFilm = filmController.update(updateFilm);
+        Assertions.assertEquals(updateFilm, updateNewFilm);
     }
 
     @Test
@@ -247,15 +223,11 @@ public class FilmControllerTest {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
         Film filmOne = new Film(10, "Test Name 18", "Test Description", localDateTest, 125);
         Film filmTwo = new Film(10, "Test Name 19", "Test Description", localDateTest, 125);
-        try {
-            Film newFilmOne = filmController.crete(filmOne);
-            Film newFilmTwo = filmController.crete(filmTwo);
-            filmOne.setId(newFilmOne.getId());
-            filmTwo.setId(newFilmTwo.getId());
-            Film[] films = {filmOne, filmTwo};
-            Assertions.assertArrayEquals(films, filmController.findAll().toArray());
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        Film newFilmOne = filmController.crete(filmOne);
+        Film newFilmTwo = filmController.crete(filmTwo);
+        filmOne.setId(newFilmOne.getId());
+        filmTwo.setId(newFilmTwo.getId());
+        Film[] films = {filmOne, filmTwo};
+        Assertions.assertArrayEquals(films, filmController.findAll().toArray());
     }
 }

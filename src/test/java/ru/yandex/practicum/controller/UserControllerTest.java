@@ -14,13 +14,9 @@ public class UserControllerTest {
     public void shouldCreateNewUser() {
         LocalDate birthdayTest = LocalDate.of(2000, 5, 15);
         User user = new User(10, "email@email.ru", "loginTest", "name test", birthdayTest);
-        try {
-            User newUser = userController.create(user);
-            user.setId(newUser.getId());
-            Assertions.assertEquals(user, newUser);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        User newUser = userController.create(user);
+        user.setId(newUser.getId());
+        Assertions.assertEquals(user, newUser);
     }
 
     @Test
@@ -75,14 +71,10 @@ public class UserControllerTest {
     public void shouldCreateNewUserWithSameNameAndLogin() {
         LocalDate birthdayTest = LocalDate.of(2000, 5, 15);
         User user = new User(10, "email@email.ru", "loginTest", "", birthdayTest);
-        try {
-            User newUser = userController.create(user);
-            user.setId(newUser.getId());
-            user.setName(user.getLogin());
-            Assertions.assertEquals(user, newUser);
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        User newUser = userController.create(user);
+        user.setId(newUser.getId());
+        user.setName(user.getLogin());
+        Assertions.assertEquals(user, newUser);
     }
 
     @Test
@@ -101,15 +93,11 @@ public class UserControllerTest {
     public void shouldUpdateUser() {
         LocalDate birthdayTest = LocalDate.of(2000, 5, 15);
         User user = new User(10, "email@email.ru", "loginTest", "name test", birthdayTest);
-        try {
-            User newUser = userController.create(user);
-            user.setId(newUser.getId());
-            User updateUser = new User(newUser.getId(), "email@email.ru", "loginTestUpdate",
-                    "name test", birthdayTest);
-            Assertions.assertEquals(updateUser, userController.update(updateUser));
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        }
+        User newUser = userController.create(user);
+        user.setId(newUser.getId());
+        User updateUser = new User(newUser.getId(), "email@email.ru", "loginTestUpdate",
+                "name test", birthdayTest);
+        Assertions.assertEquals(updateUser, userController.update(updateUser));
     }
 
     @Test
