@@ -3,51 +3,88 @@ package ru.yandex.practicum.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.model.User;
-import ru.yandex.practicum.service.IdGenerator;
-import ru.yandex.practicum.service.UserValidationService;
+import ru.yandex.practicum.service.UserService;
+import ru.yandex.practicum.storage.Storages;
+import ru.yandex.practicum.storage.UserStorage;
 
 import java.util.*;
 
 @Slf4j
 @RestController
 public class UserController {
-    private final Map<Integer, User> users = new HashMap<>();
-    private final IdGenerator idGenerator = new IdGenerator();
-    private final UserValidationService userValidationService = new UserValidationService();
+    private final UserStorage userStorage = Storages.getDefaultInMemoryUserStorage();
+    private final UserService userService = new UserService();
 
     @GetMapping("/users")
     public List<User> findAll() {
         log.info("Получен запрос на получение списка пользователей");
-        return new ArrayList<>(users.values());
+        return userStorage.findAll();
     }
 
     @PostMapping("/users")
     public User create(@RequestBody User user) {
         log.info("Получен запрос на добавление нового пользователя");
-        userValidationService.checkEmailIsBlank(user);
-        userValidationService.checkEmailIsCorrect(user);
-        userValidationService.checkLoginIsBlank(user);
-        userValidationService.checkLoginContainsSpaces(user);
-        userValidationService.checkNameIsCorrect(user);
-        userValidationService.checkBirthdayFuture(user);
-        user.setId(idGenerator.generate());
-        users.put(user.getId(), user);
-        log.info("Новый пользователь добавлен c ID " + user.getId());
+        User newUser = userStorage.addUser(user);
+        log.info("Новый пользователь добавлен c ID " + newUser.getId());
         return user;
     }
 
     @PutMapping("/users")
     public User update(@RequestBody User user) {
         log.info("Получен запрос на обновление пользователя");
-        userValidationService.checkUserAvailability(users, user);
-        userValidationService.checkEmailIsBlank(user);
-        userValidationService.checkEmailIsCorrect(user);
-        userValidationService.checkLoginIsBlank(user);
-        userValidationService.checkLoginContainsSpaces(user);
-        userValidationService.checkNameIsCorrect(user);
-        userValidationService.checkBirthdayFuture(user);
-        users.put(user.getId(), user);
-        log.info("Пользователь c ID" + user.getId() + " обновлен");
+        User newUser = userStorage.updateUser(user);
+        log.info("Пользователь c ID" + newUser.getId() + " обновлен");
         return user;
+    }
+
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable int id) {
+        log.info("Получен запрос на получение пользователя с ID " + id);
+        User user = userStorage.getUserById(id);
+        log.info("Пользователь с ID " + id + " успешно получен");
+        return user;
+    }
+
+    @PutMapping("/users/{id}/friends/{friendsId}")
+    public User addFriend(@PathVariable int id, @PathVariable int friendsId) {
+        log.info("Получен запрос на добавление друга");
+        User newUser = userService.addFriend(id, friendsId);
+        log.info("Пользователю с ID " + id + " добавлен в друзья пользователь с ID " + friendsId);
+        return newUser;
+    }
+
+    @DeleteMapping("/users/{id}/friends/{friendsId}")
+    public User deleteFriend(@PathVariable int id, @PathVariable int friendsId) {
+        log.info("Получен запрос на удаление друга");
+        User newUser = userService.deleteFriend(id, friendsId);
+        log.info("Пользователь с ID " + id + " удалил из друзей пользователя с ID " + friendsId);
+        return newUser;
+    }
+
+    @GetMapping("/users/{id}/friends")
+    public List<User> getAllFriends(@PathVariable int id) {
+        log.info("Получен запрос на получение списка всех друзей пользователя с ID " + id);
+        User user = userStorage.getUserById(id);
+        List<User> friends = userService.findAllFriends(id);
+        log.info("Список друзей пользователя с ID " + id + " успешно сформирован");
+        return friends;
+    }
+
+    @GetMapping("/users/{id}/friends/common/{otherId}")
+    public List<User> getSharedFriendsList(@PathVariable int id, @PathVariable int otherId) {
+        log.info("Получен запрос на получения общих друзей пользвателей с ID " + id + " и " + otherId);
+        User user = userStorage.getUserById(id);
+        User otherUser = userStorage.getUserById(otherId);
+        if (user.getFriends() == null || otherUser.getFriends() == null) {
+            return new ArrayList<>();
+        }
+        List<Integer> userFriendsId = new ArrayList<>(user.getFriends());
+        List<Integer> otherFriendsId = new ArrayList<>(otherUser.getFriends());
+        userFriendsId.retainAll(otherFriendsId);
+        List<User> userFriends = new ArrayList<>();
+        for (Integer userFriendId : userFriendsId) {
+            userFriends.add(userStorage.getUserById(userFriendId));
+        }
+        return userFriends;
     }
 }

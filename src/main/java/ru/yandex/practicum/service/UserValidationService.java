@@ -2,6 +2,7 @@ package ru.yandex.practicum.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.exceptions.MissingElementException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.User;
 
@@ -58,7 +59,14 @@ public class UserValidationService {
     public void checkUserAvailability(Map<Integer, User> users, User user) {
         if (users.get(user.getId()) == null) {
             log.error("Получен запрос на обновление пользователя с несуществующим ID. ID " + user.getId());
-            throw new ValidationException("Пользователя нет в списке");
+            throw new MissingElementException("Пользователя нет в списке");
+        }
+    }
+
+    public void checkUserAvailability(Map<Integer, User> users, int userId) {
+        if (users.get(userId) == null) {
+            log.error("Получен запрос на получение пользователя с несуществующим ID. ID " + userId);
+            throw new MissingElementException("Пользователя нет в списке");
         }
     }
 }
