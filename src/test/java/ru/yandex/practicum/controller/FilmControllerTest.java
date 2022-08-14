@@ -2,6 +2,7 @@ package ru.yandex.practicum.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import ru.yandex.practicum.exceptions.*;
 import ru.yandex.practicum.model.Film;
 
@@ -9,12 +10,16 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 public class FilmControllerTest {
-    FilmController filmController = new FilmController();
+    private final FilmController filmController = new FilmController();
 
     @Test
     public void shouldCreateNewFilm() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 1", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 1",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
         Film newFilm = filmController.crete(film);
         film.setId(newFilm.getId());
@@ -24,38 +29,46 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmNullName() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 2", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 2",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
         film.setName(null);
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             film.setId(newFilm.getId());
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldNotCreateNewFilmLongDescription() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 4", "Test Description Description Description " +
+        Film film = new Film(10,
+                "Test Name 4",
+                "Test Description Description Description " +
                 "Description Description Description Description Description Description Description Description " +
-                "Description Description Description Description Description Description", localDateTest, 125,
+                "Description Description Description Description Description Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldCreateNewFilmLongDescriptionTwoHundredSymbols() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 5", "Test Description Description Description " +
+        Film film = new Film(10,
+                "Test Name 5",
+                "Test Description Description Description " +
                 "Description Description Description Description Description Description Description Description " +
-                "Description Description Description Description Description Des", localDateTest, 125,
+                "Description Description Description Description Description Des",
+                localDateTest,
+                125,
                 new HashSet<>());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
@@ -64,21 +77,26 @@ public class FilmControllerTest {
 
     @Test
     public void shouldNotCreateNewFilmIncorrectReleaseDateTime() {
-        LocalDate localDateTest = LocalDate.of(1800, 5, 15);
-        Film film = new Film(10, "Test Name 6", "Test Description", localDateTest, 125,
+        LocalDate localDateTest = LocalDate.of(1800,5, 15);
+        Film film = new Film(10,
+                "Test Name 6",
+                "Test Description",
+                localDateTest, 125,
                 new HashSet<>());
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldCreateNewFilmStartReleaseDateTime() {
         LocalDate localDateTest = LocalDate.of(1895, 12, 28);
-        Film film = new Film(10, "Test Name 7", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 7",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
@@ -88,36 +106,48 @@ public class FilmControllerTest {
     @Test
     public void shouldNotCreateNewFilmNegativeDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 8", "Test Description", localDateTest, -125,
+        Film film = new Film(10,
+                "Test Name 8",
+                "Test Description",
+                localDateTest,
+                -125,
                 new HashSet<>());
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldNotCreateNewFilmZeroDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 9", "Test Description", localDateTest, 0,
+        Film film = new Film(10,
+                "Test Name 9",
+                "Test Description",
+                localDateTest,
+                0,
                 new HashSet<>());
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldUpdateFilm() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 10", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 10",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 10", "Test Update Description",
-                localDateTest, 125, new HashSet<>());
+        Film updateFilm = new Film(10,
+                "Test Name 10",
+                "Test Update Description",
+                localDateTest,
+                125,
+                new HashSet<>());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -127,36 +157,47 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateFilmNullName() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 11", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 11",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 11", "Test Update Description",
-                localDateTest, 125, new HashSet<>());
+        Film updateFilm = new Film(10,
+                "Test Name 11",
+                "Test Update Description",
+                localDateTest,
+                125,
+                new HashSet<>());
         updateFilm.setName(null);
-        try {
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldNotUpdateFilmLongDescription() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 12", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 12",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 12", "Test Update Description Description " +
+        Film updateFilm = new Film(10,
+                "Test Name 12", "Test Update Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Description Description Description",
-                localDateTest, 125, new HashSet<>());
-        try {
+                localDateTest,
+                125,
+                new HashSet<>());
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
@@ -164,10 +205,14 @@ public class FilmControllerTest {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
         Film film = new Film(10, "Test Name 13", "Test Description", localDateTest, 125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 13", "Test Update Description Description " +
+        Film updateFilm = new Film(10,
+                "Test Name 13",
+                "Test Update Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Descript",
-                localDateTest, 125, new HashSet<>());
+                localDateTest,
+                125,
+                new HashSet<>());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -177,26 +222,40 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateFilmIncorrectDate() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 14", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 14",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 14", "Test Update Description",
-                LocalDate.of(1800, 5, 15), 125, new HashSet<>());
-        try {
+        Film updateFilm = new Film(10,
+                "Test Name 14",
+                "Test Update Description",
+                LocalDate.of(1800, 5, 15),
+                125,
+                new HashSet<>());
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldUpdateFilmStartDate() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 15", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 15",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 15", "Test Update Description",
-                LocalDate.of(1895, 12, 28), 125, new HashSet<>());
+        Film updateFilm = new Film(10,
+                "Test Name 15",
+                "Test Update Description",
+                LocalDate.of(1895, 12, 28),
+                125,
+                new HashSet<>());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -206,41 +265,61 @@ public class FilmControllerTest {
     @Test
     public void shouldNotUpdateNewFilmNegativeDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 16", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 16",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 16", "Test Update Description",
-                localDateTest, -125, new HashSet<>());
-        try {
+        Film updateFilm = new Film(10,
+                "Test Name 16",
+                "Test Update Description",
+                localDateTest,
+                -125,
+                new HashSet<>());
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void shouldNotUpdateNewFilmZeroDuration() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 17", "Test Description", localDateTest, 125,
+        Film film = new Film(10,
+                "Test Name 17",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film updateFilm = new Film(10, "Test Name 17", "Test Update Description",
-                localDateTest, 0, new HashSet<>());
-        try {
+        Film updateFilm = new Film(10,
+                "Test Name 17",
+                "Test Update Description",
+                localDateTest,
+                0,
+                new HashSet<>());
+        Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
             Film updateNewFilm = filmController.update(updateFilm);
-        } catch (ValidationException e) {
-            Assertions.assertEquals(ValidationException.class, e.getClass());
-        }
+        });
     }
 
     @Test
     public void MustGetListAllMovies() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film filmOne = new Film(10, "Test Name 18", "Test Description", localDateTest, 125,
+        Film filmOne = new Film(10,
+                "Test Name 18",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
-        Film filmTwo = new Film(10, "Test Name 19", "Test Description", localDateTest, 125,
+        Film filmTwo = new Film(10,
+                "Test Name 19",
+                "Test Description",
+                localDateTest,
+                125,
                 new HashSet<>());
         Film newFilmOne = filmController.crete(filmOne);
         Film newFilmTwo = filmController.crete(filmTwo);

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.storage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.service.FilmValidationService;
@@ -13,9 +14,10 @@ import java.util.Map;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
-    private final IdGenerator idGenerator = new IdGenerator();
-    private final FilmValidationService filmValidationService = new FilmValidationService();
-
+    @Autowired
+    private FilmValidationService filmValidationService;
+    @Autowired
+    private IdGenerator idGenerator;
 
     @Override
     public List<Film> findAll() {
@@ -28,13 +30,13 @@ public class InMemoryFilmStorage implements FilmStorage {
         filmValidationService.checkLengthDescription(film);
         filmValidationService.checkDateCreationFilm(film);
         filmValidationService.checkFilmDuration(film);
-        film.setId(idGenerator.generate());
+        film.setId(idGenerator.generateIdFilm());
         films.put(film.getId(), film);
         return film;
     }
 
     @Override
-    public Film updateFilm (Film film) {
+    public Film updateFilm(Film film) {
         filmValidationService.checkMovieAvailability(films, film);
         filmValidationService.checkFilmName(film);
         filmValidationService.checkLengthDescription(film);

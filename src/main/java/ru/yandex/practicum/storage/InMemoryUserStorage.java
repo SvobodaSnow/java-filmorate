@@ -1,5 +1,6 @@
 package ru.yandex.practicum.storage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.service.IdGenerator;
@@ -13,8 +14,10 @@ import java.util.Map;
 @Component
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
-    private final IdGenerator idGenerator = new IdGenerator();
-    private final UserValidationService userValidationService = new UserValidationService();
+    @Autowired
+    private UserValidationService userValidationService;
+    @Autowired
+    private IdGenerator idGenerator;
 
     @Override
     public List<User> findAll() {
@@ -29,7 +32,7 @@ public class InMemoryUserStorage implements UserStorage {
         userValidationService.checkLoginContainsSpaces(user);
         userValidationService.checkNameIsCorrect(user);
         userValidationService.checkBirthdayFuture(user);
-        user.setId(idGenerator.generate());
+        user.setId(idGenerator.generateIdUser());
         users.put(user.getId(), user);
         return user;
     }

@@ -1,30 +1,29 @@
 package ru.yandex.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.service.UserService;
-import ru.yandex.practicum.storage.Storages;
-import ru.yandex.practicum.storage.UserStorage;
 
 import java.util.*;
 
 @Slf4j
 @RestController
 public class UserController {
-    private final UserStorage userStorage = Storages.getDefaultInMemoryUserStorage();
-    private final UserService userService = new UserService();
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/users")
     public List<User> findAll() {
         log.info("Получен запрос на получение списка пользователей");
-        return userStorage.findAll();
+        return userService.findAll();
     }
 
     @PostMapping("/users")
     public User create(@RequestBody User user) {
         log.info("Получен запрос на добавление нового пользователя");
-        User newUser = userStorage.addUser(user);
+        User newUser = userService.addUser(user);
         log.info("Новый пользователь добавлен c ID " + newUser.getId());
         return user;
     }
@@ -32,7 +31,7 @@ public class UserController {
     @PutMapping("/users")
     public User update(@RequestBody User user) {
         log.info("Получен запрос на обновление пользователя");
-        User newUser = userStorage.updateUser(user);
+        User newUser = userService.updateUser(user);
         log.info("Пользователь c ID" + newUser.getId() + " обновлен");
         return user;
     }
@@ -40,7 +39,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable int id) {
         log.info("Получен запрос на получение пользователя с ID " + id);
-        User user = userStorage.getUserById(id);
+        User user = userService.getUserById(id);
         log.info("Пользователь с ID " + id + " успешно получен");
         return user;
     }
@@ -64,7 +63,7 @@ public class UserController {
     @GetMapping("/users/{id}/friends")
     public List<User> getAllFriends(@PathVariable int id) {
         log.info("Получен запрос на получение списка всех друзей пользователя с ID " + id);
-        User user = userStorage.getUserById(id);
+        User user = userService.getUserById(id);
         List<User> friends = userService.findAllFriends(id);
         log.info("Список друзей пользователя с ID " + id + " успешно сформирован");
         return friends;
@@ -73,8 +72,8 @@ public class UserController {
     @GetMapping("/users/{id}/friends/common/{otherId}")
     public List<User> getSharedFriendsList(@PathVariable int id, @PathVariable int otherId) {
         log.info("Получен запрос на получения общих друзей пользвателей с ID " + id + " и " + otherId);
-        User user = userStorage.getUserById(id);
-        User otherUser = userStorage.getUserById(otherId);
+        User user = userService.getUserById(id);
+        User otherUser = userService.getUserById(otherId);
         if (user.getFriends() == null || otherUser.getFriends() == null) {
             return new ArrayList<>();
         }
@@ -83,7 +82,7 @@ public class UserController {
         userFriendsId.retainAll(otherFriendsId);
         List<User> userFriends = new ArrayList<>();
         for (Integer userFriendId : userFriendsId) {
-            userFriends.add(userStorage.getUserById(userFriendId));
+            userFriends.add(userService.getUserById(userFriendId));
         }
         return userFriends;
     }

@@ -1,32 +1,29 @@
 package ru.yandex.practicum.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.service.FilmService;
-import ru.yandex.practicum.storage.FilmStorage;
-import ru.yandex.practicum.storage.Storages;
 
 import java.util.*;
-
 
 @Slf4j
 @RestController
 public class FilmController {
-    private final FilmStorage filmStorage = Storages.getDefaultInMemoryFilmStorage();
-    private final FilmService filmService = new FilmService();
+    @Autowired
+    private FilmService filmService;
 
     @GetMapping("/films")
     public List<Film> findAll() {
         log.info("Получен запрос на получение списка всех фильмов");
-        return filmStorage.findAll();
+        return filmService.findAll();
     }
 
     @PostMapping("/films")
     public Film crete(@RequestBody Film film) {
         log.info("Получен запрос на добавление фильма");
-        Film newFilm = filmStorage.addFilm(film);
+        Film newFilm = filmService.addFilm(film);
         log.info("Фильм добавлен c ID " + newFilm.getId());
         return newFilm;
     }
@@ -34,7 +31,7 @@ public class FilmController {
     @PutMapping("/films")
     public Film update(@RequestBody Film film) {
         log.info("Получен запрос на обновление фильма");
-        Film newFilm = filmStorage.updateFilm(film);
+        Film newFilm = filmService.updateFilm(film);
         log.info("Фильм c ID " + newFilm.getId() + " обновлен");
         return film;
     }
@@ -42,7 +39,7 @@ public class FilmController {
     @GetMapping("/films/{id}")
     public Film getFilmById(@PathVariable int id) {
         log.info("Получен запрос на получение вильма с ID " + id);
-        Film film = filmStorage.getFilmById(id);
+        Film film = filmService.getFilmById(id);
         log.info("Фильм c ID " + id + " успешно получен");
         return film;
     }

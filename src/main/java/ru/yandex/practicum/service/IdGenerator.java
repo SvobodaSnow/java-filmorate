@@ -1,16 +1,31 @@
 package ru.yandex.practicum.service;
 
-public class IdGenerator {
-    private int id = 0;
+import org.springframework.stereotype.Service;
 
-    public int generate() {
-        id += 1;
-        return id;
+@Service
+public class IdGenerator {
+    private int idFilm = 0;
+    private int idUser =0;
+
+    public int generateIdFilm() {
+        idFilm += 1;
+        return idFilm;
     }
 
-    public void setId(int id) {
-        if(id >= this.id) {
-            this.id = id;
+    public void setIdFilm(int idFilm) {
+        if(idFilm >= this.idFilm) {
+            this.idFilm = idFilm;
+        }
+    }
+
+    public int generateIdUser() {
+        idUser += 1;
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        if(idUser >= this.idUser) {
+            this.idUser = idUser;
         }
     }
 }

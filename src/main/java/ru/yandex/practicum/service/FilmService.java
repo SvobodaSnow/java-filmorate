@@ -1,21 +1,22 @@
 package ru.yandex.practicum.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.storage.FilmStorage;
-import ru.yandex.practicum.storage.Storages;
 import ru.yandex.practicum.storage.UserStorage;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class FilmService {
-    private final FilmStorage filmStorage = Storages.getDefaultInMemoryFilmStorage();
-    private final UserStorage userStorage = Storages.getDefaultInMemoryUserStorage();
+    @Autowired
+    private FilmStorage filmStorage;
+    @Autowired
+    private UserStorage userStorage;
 
     public Film addLike(int filmId, int userId) {
         Film film = filmStorage.getFilmById(filmId);
@@ -43,10 +44,22 @@ public class FilmService {
             maxMostPopularFilm = films.size();
         }
         List<Film> mostPopularFilm = films.stream().limit(maxMostPopularFilm).collect(Collectors.toList());
-//        for (int i = 0; i < maxMostPopularFilm; i++) {
-//            mostPopularFilm.add(films.get(i));
-//        }
-
         return mostPopularFilm;
+    }
+
+    public List<Film> findAll() {
+        return filmStorage.findAll();
+    }
+
+    public Film addFilm(Film film) {
+        return filmStorage.addFilm(film);
+    }
+
+    public Film updateFilm(Film film) {
+        return filmStorage.updateFilm(film);
+    }
+
+    public Film getFilmById(int id) {
+        return filmStorage.getFilmById(id);
     }
 }

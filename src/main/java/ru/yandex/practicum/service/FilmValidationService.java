@@ -2,7 +2,7 @@ package ru.yandex.practicum.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.exceptions.MissingElementException;
+import ru.yandex.practicum.exceptions.NotFoundException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.Film;
 
@@ -51,14 +51,14 @@ public class FilmValidationService {
     public void checkMovieAvailability(Map<Integer, Film> films, Film film) {
         if (films.get(film.getId()) == null) {
             log.error("Получен запрос на обновление фильма с несуществующим ID. ID " + film.getId());
-            throw new MissingElementException("Фильма нет в колекции");
+            throw new NotFoundException("Фильма нет в колекции");
         }
     }
 
     public void checkMovieAvailability(Map<Integer, Film> films, int filmId) {
         if (films.get(filmId) == null) {
             log.error("Получен запрос на получение фильма с несуществующим ID. ID " + filmId);
-            throw new MissingElementException("Фильма нет в колекции");
+            throw new NotFoundException("Фильма нет в колекции");
         }
     }
 }
