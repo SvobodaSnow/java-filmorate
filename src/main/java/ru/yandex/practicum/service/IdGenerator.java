@@ -4,28 +4,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IdGenerator {
-    private int idFilm = 0;
-    private int idUser =0;
+    private int filmId = 0;
+    private int userId =0;
 
     public int generateIdFilm() {
-        idFilm += 1;
-        return idFilm;
+        filmId += 1;
+        return filmId;
     }
 
-    public void setIdFilm(int idFilm) {
-        if(idFilm >= this.idFilm) {
-            this.idFilm = idFilm;
+    public void setFilmId(int filmId) {
+        if(filmId >= this.filmId) {
+            this.filmId = filmId;
         }
     }
 
     public int generateIdUser() {
-        idUser += 1;
-        return idUser;
+        userId += 1;
+        return userId;
     }
 
-    public void setIdUser(int idUser) {
-        if(idUser >= this.idUser) {
-            this.idUser = idUser;
+    public void setUserId(int userId) {
+        if(userId >= this.userId) {
+            this.userId = userId;
         }
     }
 }
