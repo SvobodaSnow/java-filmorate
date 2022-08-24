@@ -13,20 +13,18 @@ public class UserService {
     private UserStorage userStorage;
 
     public User addFriend(int userId, int friendId) {
-        User user = userStorage.getUserById(userId);
-        User friend = userStorage.getUserById(friendId);
-        user.addFriend(friend);
-        friend.addFriend(user);
-        userStorage.updateUser(friend);
+        User user;
+        if (userStorage.checkRequestFriend(friendId, userId)) {
+            user = userStorage.confirmFriendRequest(userId, friendId);
+        } else {
+            user = userStorage.sendFriendRequest(userId, friendId);
+        }
         return userStorage.updateUser(user);
     }
 
     public User deleteFriend(int userId, int friendId) {
-        User user = userStorage.getUserById(userId);
-        User friend = userStorage.getUserById(friendId);
-        user.deleteFriend(friend);
-        friend.addFriend(user);
-        userStorage.updateUser(friend);
+        User user = userStorage.deleteUserFriend(userId, friendId);
+        User friend = userStorage.deleteUserFriend(friendId, userId);
         return userStorage.updateUser(user);
     }
 

@@ -61,4 +61,11 @@ public class FilmValidationService {
             throw new NotFoundException("Фильма нет в колекции");
         }
     }
+
+    public void checkMPAAvailability(Film film) {
+        if (film.getMpa() == null) {
+            log.error("Получен запрос без указанимя рейтинга MPA");
+            throw new ValidationException("Должен быть указан рейтинг MPA");
+        }
+    }
 }

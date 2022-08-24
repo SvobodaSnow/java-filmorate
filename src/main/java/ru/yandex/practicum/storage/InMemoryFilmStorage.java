@@ -1,8 +1,11 @@
 package ru.yandex.practicum.storage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.Film;
+import ru.yandex.practicum.model.Genre;
+import ru.yandex.practicum.model.MPA;
 import ru.yandex.practicum.service.FilmValidationService;
 import ru.yandex.practicum.service.IdGenerator;
 
@@ -12,8 +15,24 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Qualifier("inMemoryFilmStorage")
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
+    private final Map<Integer, Genre> genres = Map.ofEntries(
+            Map.entry(1, new Genre(1, "Комедия")),
+            Map.entry(2, new Genre(2, "Драма")),
+            Map.entry(3, new Genre(3, "Мультфтльм")),
+            Map.entry(4, new Genre(4, "Триллер")),
+            Map.entry(5, new Genre(5, "Документальный")),
+            Map.entry(6, new Genre(6, "Боевик"))
+    );
+    private final Map<Integer, MPA> mpa = Map.ofEntries(
+            Map.entry(1, new MPA(1, "G")),
+            Map.entry(2, new MPA(2, "PG")),
+            Map.entry(3, new MPA(3, "PG-13")),
+            Map.entry(4, new MPA(4, "R")),
+            Map.entry(5, new MPA(5, "NC-17"))
+    );
     @Autowired
     private FilmValidationService filmValidationService;
     @Autowired
@@ -50,5 +69,39 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film getFilmById(int id) {
         filmValidationService.checkMovieAvailability(films, id);
         return films.get(id);
+    }
+
+    @Override
+    public Film addLikeFilm(int filmId, int userId) {
+        Film film = films.get(filmId);
+        film.addLike(userId);
+        return films.put(filmId, film);
+    }
+
+    @Override
+    public Film removeLikeFilm(int filmId, int userId) {
+        Film film = films.get(filmId);
+        film.removeLike(userId);
+        return films.put(filmId, film);
+    }
+
+    @Override
+    public MPA getMPAById(int id) {
+        return mpa.get(id);
+    }
+
+    @Override
+    public List<MPA> getMPA() {
+        return new ArrayList<>(mpa.values());
+    }
+
+    @Override
+    public Genre getGenreById(int id) {
+        return genres.get(id);
+    }
+
+    @Override
+    public List<Genre> getGenres() {
+        return new ArrayList<>(genres.values());
     }
 }

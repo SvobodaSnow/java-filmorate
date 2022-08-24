@@ -2,12 +2,14 @@ package ru.yandex.practicum.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Film {
     private int id;
@@ -15,26 +17,58 @@ public class Film {
     private String description;
     private LocalDate releaseDate;
     private int duration;
-    private Set<Integer> filmsLike;
+    private int rate;
+    private Set<Integer> filmLikes;
+    private Set<Genre> genres;
+    private MPA mpa;
 
     public void addLike(User newLike) {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
+        if (filmLikes == null) {
+            filmLikes = new HashSet<>();
         }
-        filmsLike.add(newLike.getId());
+        filmLikes.add(newLike.getId());
+        rate += 1;
     }
 
     public void removeLike(User deletedLike) {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
+        if (filmLikes == null) {
+            filmLikes = new HashSet<>();
         }
-        filmsLike.remove(deletedLike.getId());
+        filmLikes.remove(deletedLike.getId());
+        rate -= 1;
+    }
+
+    public void addLike(int newLike) {
+        if (filmLikes == null) {
+            filmLikes = new HashSet<>();
+        }
+        filmLikes.add(newLike);
+        rate += 1;
+    }
+
+    public void removeLike(int deletedLike) {
+        if (filmLikes == null) {
+            filmLikes = new HashSet<>();
+        }
+        filmLikes.remove(deletedLike);
+        rate -= 1;
     }
 
     public int returnNumberLikes() {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
+        return rate;
+    }
+
+    public void addGenre(Genre genre) {
+        if (genres == null) {
+            genres = new HashSet<>();
         }
-        return filmsLike.size();
+        genres.add(genre);
+    }
+
+    public void removeGenre(Genre genre) {
+        if (genres == null) {
+            genres = new HashSet<>();
+        }
+        genres.remove(genre);
     }
 }

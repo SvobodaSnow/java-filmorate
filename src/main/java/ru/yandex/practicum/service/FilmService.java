@@ -3,7 +3,8 @@ package ru.yandex.practicum.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.model.Film;
-import ru.yandex.practicum.model.User;
+import ru.yandex.practicum.model.Genre;
+import ru.yandex.practicum.model.MPA;
 import ru.yandex.practicum.storage.FilmStorage;
 import ru.yandex.practicum.storage.UserStorage;
 
@@ -19,17 +20,11 @@ public class FilmService {
     private UserStorage userStorage;
 
     public Film addLike(int filmId, int userId) {
-        Film film = filmStorage.getFilmById(filmId);
-        User user = userStorage.getUserById(userId);
-        film.addLike(user);
-        return filmStorage.updateFilm(film);
+        return filmStorage.updateFilm(filmStorage.addLikeFilm(filmId, userId));
     }
 
     public Film removeLike(int filmId, int userId) {
-        Film film = filmStorage.getFilmById(filmId);
-        User user = userStorage.getUserById(userId);
-        film.removeLike(user);
-        return filmStorage.updateFilm(film);
+        return filmStorage.updateFilm(filmStorage.removeLikeFilm(filmId, userId));
     }
 
     public List<Film> returnMostPopularFilm(int maxMostPopularFilm) {
@@ -43,8 +38,7 @@ public class FilmService {
         if (films.size() < maxMostPopularFilm) {
             maxMostPopularFilm = films.size();
         }
-        List<Film> mostPopularFilm = films.stream().limit(maxMostPopularFilm).collect(Collectors.toList());
-        return mostPopularFilm;
+        return films.stream().limit(maxMostPopularFilm).collect(Collectors.toList());
     }
 
     public List<Film> findAll() {
@@ -61,5 +55,21 @@ public class FilmService {
 
     public Film getFilmById(int id) {
         return filmStorage.getFilmById(id);
+    }
+
+    public MPA getMPAById(int id) {
+        return filmStorage.getMPAById(id);
+    }
+
+    public List<MPA> getMPA() {
+        return filmStorage.getMPA();
+    }
+
+    public Genre getGenreById(int id) {
+        return filmStorage.getGenreById(id);
+    }
+
+    public List<Genre> getGenres() {
+        return filmStorage.getGenres();
     }
 }
