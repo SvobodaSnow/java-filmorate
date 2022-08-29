@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
-import ru.yandex.practicum.model.MPA;
+import ru.yandex.practicum.model.Mpa;
 import ru.yandex.practicum.service.FilmService;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class FilmController {
     }
 
     @GetMapping("/films/popular")
-    public List<Film> returnMostPopularFilm(@RequestParam(defaultValue = "10") int count) {
+    public List<Film> getMostPopularFilm(@RequestParam(defaultValue = "10") int count) {
         log.info("Получен запрос на получение " + count + " самых популярных фильма");
         List<Film> mostPopularFilms = filmService.returnMostPopularFilm(count);
         log.info("Список самых популярных фильмов сформирован");
@@ -71,31 +71,31 @@ public class FilmController {
     }
 
     @GetMapping("/mpa/{id}")
-    public MPA returnMPAFilm(@PathVariable int id) {
-        log.info("Получен запрос на получение рейтинга MPA с ID" + id);
-        MPA mpa = filmService.getMPAById(id);
+    public Mpa getMpaFilm(@PathVariable int id) {
+        log.info("Получен запрос на получение рейтинга MPA с ID " + id);
+        Mpa mpa = filmService.getMPAById(id);
         log.info("Рейтинг MPA успешно сформирован");
         return mpa;
     }
 
     @GetMapping("/mpa")
-    public List<MPA> returnMPAAllFilm() {
+    public List<Mpa> getMpaAllFilm() {
         log.info("Получен запрос на получение рейтинга MPA");
-        List<MPA> mpaAllFilms = filmService.getMPA();
+        List<Mpa> mpaAllFilms = filmService.getMPA();
         log.info("Рейтинг MPA успешно сформирован");
         return mpaAllFilms;
     }
 
     @GetMapping("/genres/{id}")
-    public Genre returnGenresFilm(@PathVariable int id) {
-        log.info("Получен запрос на получение жанра с ID" + id);
+    public Genre getGenresFilm(@PathVariable int id) {
+        log.info("Получен запрос на получение жанра с ID " + id);
         Genre genre = filmService.getGenreById(id);
         log.info("Список жанров успешно сформирован");
         return genre;
     }
 
     @GetMapping("/genres")
-    public List<Genre> returnGenresAllFilm() {
+    public List<Genre> getGenresAllFilm() {
         log.info("Получен запрос на получение жанров для всех фильмов");
         List<Genre> genres = filmService.getGenres();
         log.info("Рейтинг MPA успешно сформирован");

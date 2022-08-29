@@ -18,57 +18,39 @@ public class Film {
     private LocalDate releaseDate;
     private int duration;
     private int rate;
-    private Set<Integer> filmLikes;
-    private Set<Genre> genres;
-    private MPA mpa;
+    private Set<Integer> likedUsers = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
+    private Mpa mpa;
 
     public void addLike(User newLike) {
-        if (filmLikes == null) {
-            filmLikes = new HashSet<>();
-        }
-        filmLikes.add(newLike.getId());
+        likedUsers.add(newLike.getId());
         rate += 1;
     }
 
     public void removeLike(User deletedLike) {
-        if (filmLikes == null) {
-            filmLikes = new HashSet<>();
-        }
-        filmLikes.remove(deletedLike.getId());
+        likedUsers.remove(deletedLike.getId());
         rate -= 1;
     }
 
     public void addLike(int newLike) {
-        if (filmLikes == null) {
-            filmLikes = new HashSet<>();
-        }
-        filmLikes.add(newLike);
+        likedUsers.add(newLike);
         rate += 1;
     }
 
     public void removeLike(int deletedLike) {
-        if (filmLikes == null) {
-            filmLikes = new HashSet<>();
-        }
-        filmLikes.remove(deletedLike);
+        likedUsers.remove(deletedLike);
         rate -= 1;
     }
 
-    public int returnNumberLikes() {
+    public int getNumberLikes() {
         return rate;
     }
 
     public void addGenre(Genre genre) {
-        if (genres == null) {
-            genres = new HashSet<>();
-        }
         genres.add(genre);
     }
 
     public void removeGenre(Genre genre) {
-        if (genres == null) {
-            genres = new HashSet<>();
-        }
         genres.remove(genre);
     }
 }

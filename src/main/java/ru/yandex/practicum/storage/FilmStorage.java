@@ -2,7 +2,7 @@ package ru.yandex.practicum.storage;
 
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
-import ru.yandex.practicum.model.MPA;
+import ru.yandex.practicum.model.Mpa;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public interface FilmStorage {
 
     Film removeLikeFilm(int filmId, int userId);
 
-    MPA getMPAById(int id);
+    Mpa getMPAById(int id);
 
-    List<MPA> getMPA();
+    List<Mpa> getMPA();
 
     Genre getGenreById(int id);
 

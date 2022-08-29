@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
-import ru.yandex.practicum.model.MPA;
+import ru.yandex.practicum.model.Mpa;
 import ru.yandex.practicum.service.FilmValidationService;
 import ru.yandex.practicum.service.IdGenerator;
 
@@ -26,12 +26,12 @@ public class InMemoryFilmStorage implements FilmStorage {
             Map.entry(5, new Genre(5, "Документальный")),
             Map.entry(6, new Genre(6, "Боевик"))
     );
-    private final Map<Integer, MPA> mpa = Map.ofEntries(
-            Map.entry(1, new MPA(1, "G")),
-            Map.entry(2, new MPA(2, "PG")),
-            Map.entry(3, new MPA(3, "PG-13")),
-            Map.entry(4, new MPA(4, "R")),
-            Map.entry(5, new MPA(5, "NC-17"))
+    private final Map<Integer, Mpa> mpa = Map.ofEntries(
+            Map.entry(1, new Mpa(1, "G")),
+            Map.entry(2, new Mpa(2, "PG")),
+            Map.entry(3, new Mpa(3, "PG-13")),
+            Map.entry(4, new Mpa(4, "R")),
+            Map.entry(5, new Mpa(5, "NC-17"))
     );
     @Autowired
     private FilmValidationService filmValidationService;
@@ -86,12 +86,12 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public MPA getMPAById(int id) {
+    public Mpa getMPAById(int id) {
         return mpa.get(id);
     }
 
     @Override
-    public List<MPA> getMPA() {
+    public List<Mpa> getMPA() {
         return new ArrayList<>(mpa.values());
     }
 

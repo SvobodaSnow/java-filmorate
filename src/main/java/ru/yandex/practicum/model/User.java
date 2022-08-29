@@ -17,35 +17,23 @@ public class User {
     private String login;
     private String name;
     private LocalDate birthday;
-    private Set<Integer> friends;
-    private Set<Integer> sentFriendshipRequests;
-    private Set<Integer> receivedFriendshipRequests;
+    private Set<Integer> friends = new HashSet<>();
+    private Set<Integer> sentFriendshipRequests = new HashSet<>();
+    private Set<Integer> receivedFriendshipRequests = new HashSet<>();
 
     public void addFriend(User newFriend) {
-        if (friends == null) {
-            friends = new HashSet<>();
-        }
         friends.add(newFriend.getId());
     }
 
     public void deleteFriend(User deletedFriend) {
-        if (friends == null) {
-            friends = new HashSet<>();
-        }
         friends.remove(deletedFriend.getId());
     }
 
     public void addSentFriendshipRequests(User newFriend) {
-        if (sentFriendshipRequests == null) {
-            sentFriendshipRequests = new HashSet<>();
-        }
         sentFriendshipRequests.add(newFriend.getId());
     }
 
     public void addReceivedFriendshipRequests(User newFriend) {
-        if (receivedFriendshipRequests == null) {
-            receivedFriendshipRequests = new HashSet<>();
-        }
         receivedFriendshipRequests.add(newFriend.getId());
     }
 

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
-import ru.yandex.practicum.model.MPA;
+import ru.yandex.practicum.model.Mpa;
 import ru.yandex.practicum.storage.FilmStorage;
 import ru.yandex.practicum.storage.UserStorage;
 
@@ -32,7 +32,7 @@ public class FilmService {
         films.sort(new Comparator<Film>() {
             @Override
             public int compare(Film o1, Film o2) {
-                return o2.returnNumberLikes() - o1.returnNumberLikes();
+                return o2.getNumberLikes() - o1.getNumberLikes();
             }
         });
         if (films.size() < maxMostPopularFilm) {
@@ -57,11 +57,11 @@ public class FilmService {
         return filmStorage.getFilmById(id);
     }
 
-    public MPA getMPAById(int id) {
+    public Mpa getMPAById(int id) {
         return filmStorage.getMPAById(id);
     }
 
-    public List<MPA> getMPA() {
+    public List<Mpa> getMPA() {
         return filmStorage.getMPA();
     }
 
