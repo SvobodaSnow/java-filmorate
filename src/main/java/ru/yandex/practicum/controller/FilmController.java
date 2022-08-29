@@ -70,7 +70,7 @@ public class FilmController {
         return mostPopularFilms;
     }
 
-    @GetMapping("/mpa/{id}")
+    @GetMapping("/mpa/{mpaId}")
     public Mpa getMpa(@PathVariable int mpaId) {
         log.info("Получен запрос на получение рейтинга MPA с ID " + mpaId);
         Mpa mpa = filmService.getMPAById(mpaId);
@@ -86,7 +86,7 @@ public class FilmController {
         return mpaAllFilms;
     }
 
-    @GetMapping("/genres/{id}")
+    @GetMapping("/genres/{genreId}")
     public Genre getGenre(@PathVariable int genreId) {
         log.info("Получен запрос на получение жанра с ID " + genreId);
         Genre genre = filmService.getGenreById(genreId);
