@@ -22,28 +22,24 @@ public class Film {
     private Set<Genre> genres = new HashSet<>();
     private Mpa mpa;
 
-    public void addLike(User newLike) {
-        likedUsers.add(newLike.getId());
+    public void addLikeByUser(User user) {
+        likedUsers.add(user.getId());
         rate += 1;
     }
 
-    public void removeLike(User deletedLike) {
-        likedUsers.remove(deletedLike.getId());
+    public void removeLikeByUser(User user) {
+        likedUsers.remove(user.getId());
         rate -= 1;
     }
 
-    public void addLike(int newLike) {
-        likedUsers.add(newLike);
+    public void addLikeByUserId(int userId) {
+        likedUsers.add(userId);
         rate += 1;
     }
 
-    public void removeLike(int deletedLike) {
-        likedUsers.remove(deletedLike);
+    public void removeLikeByUserId(int userId) {
+        likedUsers.remove(userId);
         rate -= 1;
-    }
-
-    public int getNumberLikes() {
-        return rate;
     }
 
     public void addGenre(Genre genre) {

@@ -63,7 +63,7 @@ public class FilmController {
     }
 
     @GetMapping("/films/popular")
-    public List<Film> getMostPopularFilm(@RequestParam(defaultValue = "10") int count) {
+    public List<Film> getMostPopularFilms(@RequestParam(defaultValue = "10") int count) {
         log.info("Получен запрос на получение " + count + " самых популярных фильма");
         List<Film> mostPopularFilms = filmService.returnMostPopularFilm(count);
         log.info("Список самых популярных фильмов сформирован");
@@ -71,31 +71,31 @@ public class FilmController {
     }
 
     @GetMapping("/mpa/{id}")
-    public Mpa getMpaFilm(@PathVariable int id) {
-        log.info("Получен запрос на получение рейтинга MPA с ID " + id);
-        Mpa mpa = filmService.getMPAById(id);
+    public Mpa getMpa(@PathVariable int mpaId) {
+        log.info("Получен запрос на получение рейтинга MPA с ID " + mpaId);
+        Mpa mpa = filmService.getMPAById(mpaId);
         log.info("Рейтинг MPA успешно сформирован");
         return mpa;
     }
 
     @GetMapping("/mpa")
-    public List<Mpa> getMpaAllFilm() {
+    public List<Mpa> getAllMpa() {
         log.info("Получен запрос на получение рейтинга MPA");
-        List<Mpa> mpaAllFilms = filmService.getMPA();
+        List<Mpa> mpaAllFilms = filmService.getMpa();
         log.info("Рейтинг MPA успешно сформирован");
         return mpaAllFilms;
     }
 
     @GetMapping("/genres/{id}")
-    public Genre getGenresFilm(@PathVariable int id) {
-        log.info("Получен запрос на получение жанра с ID " + id);
-        Genre genre = filmService.getGenreById(id);
+    public Genre getGenre(@PathVariable int genreId) {
+        log.info("Получен запрос на получение жанра с ID " + genreId);
+        Genre genre = filmService.getGenreById(genreId);
         log.info("Список жанров успешно сформирован");
         return genre;
     }
 
     @GetMapping("/genres")
-    public List<Genre> getGenresAllFilm() {
+    public List<Genre> getAllGenres() {
         log.info("Получен запрос на получение жанров для всех фильмов");
         List<Genre> genres = filmService.getGenres();
         log.info("Рейтинг MPA успешно сформирован");

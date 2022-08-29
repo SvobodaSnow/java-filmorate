@@ -32,7 +32,7 @@ public class FilmService {
         films.sort(new Comparator<Film>() {
             @Override
             public int compare(Film o1, Film o2) {
-                return o2.getNumberLikes() - o1.getNumberLikes();
+                return o2.getRate() - o1.getRate();
             }
         });
         if (films.size() < maxMostPopularFilm) {
@@ -58,11 +58,11 @@ public class FilmService {
     }
 
     public Mpa getMPAById(int id) {
-        return filmStorage.getMPAById(id);
+        return filmStorage.getMpaById(id);
     }
 
-    public List<Mpa> getMPA() {
-        return filmStorage.getMPA();
+    public List<Mpa> getMpa() {
+        return filmStorage.getMpa();
     }
 
     public Genre getGenreById(int id) {

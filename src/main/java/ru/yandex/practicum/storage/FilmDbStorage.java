@@ -111,7 +111,7 @@ public class FilmDbStorage implements FilmStorage {
             film.setReleaseDate(filmRow.getDate("release_date").toLocalDate());
             film.setDuration(filmRow.getInt("duration"));
             film.setRate(filmRow.getInt("rate"));
-            film.setMpa(getMPAById(filmRow.getInt("rating_id")));
+            film.setMpa(getMpaById(filmRow.getInt("rating_id")));
         } else {
             log.error("Получен запрос на обновление фильма с ID " + id + ", которого нет в базе данных");
             throw new NotFoundException("Фильма нет в списке");
@@ -129,7 +129,7 @@ public class FilmDbStorage implements FilmStorage {
             log.error("Получен запрос на добавление лайка к фильму с ID " + filmId + ", который уже добавлен");
             throw new NotFoundException("Лайк уже добавлен");
         }
-        film.addLike(userId);
+        film.addLikeByUserId(userId);
         String sql = "INSERT INTO likes (film_id, user_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, filmId, userId);
         return film;
@@ -139,14 +139,14 @@ public class FilmDbStorage implements FilmStorage {
     public Film removeLikeFilm(int filmId, int userId) {
         userDbStorage.getUserById(userId);
         Film film = getFilmById(filmId);
-        film.removeLike(userId);
+        film.removeLikeByUserId(userId);
         String sql = "DELETE FROM likes WHERE film_id = ? AND user_id = ?";
         jdbcTemplate.update(sql, filmId, userId);
         return film;
     }
 
     @Override
-    public Mpa getMPAById(int id) {
+    public Mpa getMpaById(int id) {
         String sql = "SELECT name FROM mpa WHERE rating_id = ?";
         SqlRowSet mpaRow = jdbcTemplate.queryForRowSet(sql, id);
         if (mpaRow.next()) {
@@ -160,9 +160,9 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public List<Mpa> getMPA() {
+    public List<Mpa> getMpa() {
         String sql = "SELECT * FROM mpa";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeMPA(rs));
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs));
     }
 
     @Override
@@ -201,7 +201,7 @@ public class FilmDbStorage implements FilmStorage {
         film.setReleaseDate(rs.getDate("release_date").toLocalDate());
         film.setDuration(rs.getInt("duration"));
         film.setRate(rs.getInt("rate"));
-        film.setMpa(getMPAById(rs.getInt("rating_id")));
+        film.setMpa(getMpaById(rs.getInt("rating_id")));
         return film;
     }
 
@@ -266,9 +266,7 @@ public class FilmDbStorage implements FilmStorage {
         jdbcTemplate.update(sql, id);
     }
 
-
-
-    private Mpa makeMPA(ResultSet rs) throws SQLException {
+    private Mpa makeMpa(ResultSet rs) throws SQLException {
         Mpa mpa = new Mpa();
         mpa.setId(rs.getInt("rating_id"));
         mpa.setName(rs.getString("name"));

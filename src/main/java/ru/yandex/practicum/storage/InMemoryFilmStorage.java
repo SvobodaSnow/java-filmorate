@@ -74,24 +74,24 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public Film addLikeFilm(int filmId, int userId) {
         Film film = films.get(filmId);
-        film.addLike(userId);
+        film.addLikeByUserId(userId);
         return films.put(filmId, film);
     }
 
     @Override
     public Film removeLikeFilm(int filmId, int userId) {
         Film film = films.get(filmId);
-        film.removeLike(userId);
+        film.removeLikeByUserId(userId);
         return films.put(filmId, film);
     }
 
     @Override
-    public Mpa getMPAById(int id) {
+    public Mpa getMpaById(int id) {
         return mpa.get(id);
     }
 
     @Override
-    public List<Mpa> getMPA() {
+    public List<Mpa> getMpa() {
         return new ArrayList<>(mpa.values());
     }
 

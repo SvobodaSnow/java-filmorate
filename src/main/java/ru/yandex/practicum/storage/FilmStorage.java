@@ -19,9 +19,9 @@ public interface FilmStorage {
 
     Film removeLikeFilm(int filmId, int userId);
 
-    Mpa getMPAById(int id);
+    Mpa getMpaById(int id);
 
-    List<Mpa> getMPA();
+    List<Mpa> getMpa();
 
     Genre getGenreById(int id);
 
