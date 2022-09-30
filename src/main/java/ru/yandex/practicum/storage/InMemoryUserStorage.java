@@ -1,6 +1,7 @@
 package ru.yandex.practicum.storage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.service.IdGenerator;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Qualifier("inMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
     @Autowired
@@ -65,5 +67,61 @@ public class InMemoryUserStorage implements UserStorage {
     public User getUserById(int id) {
         userValidationService.checkUserAvailability(users, id);
         return users.get(id);
+    }
+
+    @Override
+    public User addUserFriend(int userId, int friendId) {
+        User user = users.get(userId);
+        User friend = users.get(friendId);
+        user.addFriend(friend);
+        friend.addFriend(user);
+        return user;
+    }
+
+    @Override
+    public User deleteUserFriend(int userId, int friendId) {
+        User user = users.get(userId);
+        User friend = users.get(friendId);
+        user.deleteFriend(friend);
+        friend.deleteFriend(user);
+        return user;
+    }
+
+    @Override
+    public User sendFriendRequest(int userId, int friendId) {
+        userValidationService.checkUserAvailability(users, userId);
+        userValidationService.checkUserAvailability(users, friendId);
+        User user = users.get(userId);
+        User friend = users.get(friendId);
+        user.addSentFriendshipRequests(friend);
+        friend.addReceivedFriendshipRequests(user);
+        return user;
+    }
+
+    @Override
+    public User deleteFriendRequest(int userId, int friendId) {
+        userValidationService.checkUserAvailability(users, userId);
+        userValidationService.checkUserAvailability(users, friendId);
+        User user = users.get(userId);
+        User friend = users.get(friendId);
+        user.deleteSentFriendshipRequests(friend);
+        friend.deleteReceivedFriendshipRequests(friend);
+        return user;
+    }
+
+    @Override
+    public User confirmFriendRequest(int userId, int friendId) {
+        userValidationService.checkUserAvailability(users, userId);
+        userValidationService.checkUserAvailability(users, friendId);
+        addUserFriend(userId, friendId);
+        deleteFriendRequest(friendId, userId);
+        return users.get(userId);
+    }
+
+    @Override
+    public boolean checkRequestFriend(int userId, int friendId) {
+        userValidationService.checkUserAvailability(users, userId);
+        userValidationService.checkUserAvailability(users, friendId);
+        return users.get(userId).getReceivedFriendshipRequests().contains(friendId);
     }
 }

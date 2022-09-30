@@ -2,9 +2,9 @@ package ru.yandex.practicum.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import ru.yandex.practicum.exceptions.*;
 import ru.yandex.practicum.model.Film;
+import ru.yandex.practicum.model.Mpa;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -20,7 +20,10 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilm = filmController.crete(film);
         film.setId(newFilm.getId());
         Assertions.assertEquals(film, newFilm);
@@ -34,7 +37,10 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         film.setName(null);
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
@@ -52,7 +58,10 @@ public class FilmControllerTest {
                 "Description Description Description Description Description Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -69,7 +78,10 @@ public class FilmControllerTest {
                 "Description Description Description Description Description Des",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
         Assertions.assertEquals(film, newFilmOne);
@@ -82,7 +94,10 @@ public class FilmControllerTest {
                 "Test Name 6",
                 "Test Description",
                 localDateTest, 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -97,7 +112,10 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
         Assertions.assertEquals(film, newFilmOne);
@@ -111,7 +129,10 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 -125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -126,7 +147,10 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 0,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
             film.setId(newFilmOne.getId());
@@ -141,13 +165,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 10",
                 "Test Update Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -162,13 +192,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 11",
                 "Test Update Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         updateFilm.setName(null);
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
@@ -185,14 +221,20 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 12", "Test Update Description Description " +
                 "Description Description Description Description Description Description Description Description " +
                 "Description Description Description Description Description Description Description Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -203,8 +245,15 @@ public class FilmControllerTest {
     @Test
     public void shouldUpdateFilmLongDescriptionTwoHundredSymbols() {
         LocalDate localDateTest = LocalDate.of(2010, 5, 15);
-        Film film = new Film(10, "Test Name 13", "Test Description", localDateTest, 125,
-                new HashSet<>());
+        Film film = new Film(10,
+                "Test Name 13",
+                "Test Description",
+                localDateTest,
+                125,
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 13",
                 "Test Update Description Description " +
@@ -212,7 +261,10 @@ public class FilmControllerTest {
                 "Description Description Description Description Description Descript",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -227,13 +279,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 14",
                 "Test Update Description",
                 LocalDate.of(1800, 5, 15),
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -249,13 +307,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 15",
                 "Test Update Description",
                 LocalDate.of(1895, 12, 28),
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilm = filmController.crete(film);
         updateFilm.setId(newFilm.getId());
         Film updateNewFilm = filmController.update(updateFilm);
@@ -270,13 +334,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 16",
                 "Test Update Description",
                 localDateTest,
                 -125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -292,13 +362,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 17",
                 "Test Update Description",
                 localDateTest,
                 0,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilm = filmController.crete(film);
             updateFilm.setId(newFilm.getId());
@@ -314,13 +390,19 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film filmTwo = new Film(10,
                 "Test Name 19",
                 "Test Description",
                 localDateTest,
                 125,
-                new HashSet<>());
+                0,
+                new HashSet<>(),
+                new HashSet<>(),
+                new Mpa());
         Film newFilmOne = filmController.crete(filmOne);
         Film newFilmTwo = filmController.crete(filmTwo);
         filmOne.setId(newFilmOne.getId());

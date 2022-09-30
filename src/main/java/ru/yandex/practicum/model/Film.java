@@ -2,12 +2,14 @@ package ru.yandex.practicum.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Film {
     private int id;
@@ -15,26 +17,36 @@ public class Film {
     private String description;
     private LocalDate releaseDate;
     private int duration;
-    private Set<Integer> filmsLike;
+    private int rate;
+    private Set<Integer> likedUsers = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
+    private Mpa mpa;
 
-    public void addLike(User newLike) {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
-        }
-        filmsLike.add(newLike.getId());
+    public void addLikeByUser(User user) {
+        likedUsers.add(user.getId());
+        rate += 1;
     }
 
-    public void removeLike(User deletedLike) {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
-        }
-        filmsLike.remove(deletedLike.getId());
+    public void removeLikeByUser(User user) {
+        likedUsers.remove(user.getId());
+        rate -= 1;
     }
 
-    public int returnNumberLikes() {
-        if (filmsLike == null) {
-            filmsLike = new HashSet<>();
-        }
-        return filmsLike.size();
+    public void addLikeByUserId(int userId) {
+        likedUsers.add(userId);
+        rate += 1;
+    }
+
+    public void removeLikeByUserId(int userId) {
+        likedUsers.remove(userId);
+        rate -= 1;
+    }
+
+    public void addGenre(Genre genre) {
+        genres.add(genre);
+    }
+
+    public void removeGenre(Genre genre) {
+        genres.remove(genre);
     }
 }
