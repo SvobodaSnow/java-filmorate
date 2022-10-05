@@ -50,7 +50,7 @@ public class ReviewsService {
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
         reviewsStorage.addLikeReviews(reviewsId, userId);
         reviews.addLike();
-        return reviewsStorage.updateReviews(reviews);
+        return reviewsStorage.updateUseful(reviews);
     }
 
     public Reviews addDislikeReviews(int reviewsId, int userId) {
@@ -58,7 +58,7 @@ public class ReviewsService {
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
         reviewsStorage.addDislikeReviews(reviewsId, userId);
         reviews.addDislike();
-        return reviewsStorage.updateReviews(reviews);
+        return reviewsStorage.updateUseful(reviews);
     }
 
     public Reviews deleteLikeReviews(int reviewsId, int userId) {
@@ -66,7 +66,7 @@ public class ReviewsService {
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
         reviewsStorage.deleteLikeReviews(reviewsId, userId);
         reviews.deleteLike();
-        return reviewsStorage.updateReviews(reviews);
+        return reviewsStorage.updateUseful(reviews);
     }
 
     public Reviews deleteDislikeReviews(int reviewsId, int userId) {
@@ -74,6 +74,6 @@ public class ReviewsService {
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
         reviewsStorage.deleteDislikeReviews(reviewsId, userId);
         reviews.deleteDislike();
-        return reviewsStorage.updateReviews(reviews);
+        return reviewsStorage.updateUseful(reviews);
     }
 }

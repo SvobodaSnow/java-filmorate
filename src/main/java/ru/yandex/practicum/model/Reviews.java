@@ -1,8 +1,10 @@
 package ru.yandex.practicum.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 @NoArgsConstructor
@@ -10,7 +12,9 @@ import lombok.NoArgsConstructor;
 public class Reviews {
     private int reviewId;
     private String content;
-    private boolean isPositive;
+    //@Value("null")
+    @JsonProperty("isPositive")
+    private Boolean isPositive;
     private int userId;
     private int filmId;
     private int useful;

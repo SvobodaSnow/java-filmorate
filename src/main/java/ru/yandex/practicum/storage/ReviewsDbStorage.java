@@ -36,7 +36,7 @@ public class ReviewsDbStorage implements ReviewsStorage {
         jdbcTemplate.update(
                 sqlInsertReviews,
                 newReviews.getContent(),
-                newReviews.isPositive(),
+                newReviews.getIsPositive(),
                 newReviews.getUserId(),
                 newReviews.getFilmId()
         );
@@ -54,18 +54,23 @@ public class ReviewsDbStorage implements ReviewsStorage {
         getReviewsById(reviews.getReviewId());
         reviewValidationService.checkReviews(reviews);
 
-        String sql = "UPDATE reviews " +
-                "SET content = ?, isPositive = ?, user_id = ?, film_id = ?, useful = ? " +
-                "WHERE review_id = ?";
+        String sql = "UPDATE reviews SET content = ?, isPositive = ? WHERE review_id = ?";
         jdbcTemplate.update(
                 sql,
                 reviews.getContent(),
-                reviews.isPositive(),
-                reviews.getUserId(),
-                reviews.getFilmId(),
-                reviews.getUseful(),
+                reviews.getIsPositive(),
                 reviews.getReviewId()
         );
+        return getReviewsById(reviews.getReviewId());
+    }
+
+    @Override
+    public Reviews updateUseful(Reviews reviews) {
+        getReviewsById(reviews.getReviewId());
+        reviewValidationService.checkReviews(reviews);
+
+        String sql = "UPDATE reviews SET useful = ? WHERE review_id = ?";
+        jdbcTemplate.update(sql, reviews.getUseful(), reviews.getReviewId());
         return getReviewsById(reviews.getReviewId());
     }
 
@@ -77,7 +82,7 @@ public class ReviewsDbStorage implements ReviewsStorage {
         if (reviewsRow.next()) {
             reviews.setReviewId(id);
             reviews.setContent(reviewsRow.getString("content"));
-            reviews.setPositive(reviewsRow.getBoolean("isPositive"));
+            reviews.setIsPositive(reviewsRow.getBoolean("isPositive"));
             reviews.setUserId(reviewsRow.getInt("user_id"));
             reviews.setFilmId(reviewsRow.getInt("film_id"));
             reviews.setUseful(reviewsRow.getInt("useful"));
@@ -96,7 +101,7 @@ public class ReviewsDbStorage implements ReviewsStorage {
 
     @Override
     public List<Reviews> getAllReviews() {
-        String sql = "SELECT * FROM reviews ORDER BY film_id, useful DESC, review_id";
+        String sql = "SELECT * FROM reviews ORDER BY useful DESC";
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeReviews(rs));
     }
 
@@ -104,7 +109,7 @@ public class ReviewsDbStorage implements ReviewsStorage {
         Reviews reviews = new Reviews();
         reviews.setReviewId(rs.getInt("review_id"));
         reviews.setContent(rs.getString("content"));
-        reviews.setPositive(rs.getBoolean("isPositive"));
+        reviews.setIsPositive(rs.getBoolean("isPositive"));
         reviews.setUserId(rs.getInt("user_id"));
         reviews.setFilmId(rs.getInt("film_id"));
         reviews.setUseful(rs.getInt("useful"));
@@ -114,7 +119,7 @@ public class ReviewsDbStorage implements ReviewsStorage {
     @Override
     public List<Reviews> getReviewsListByFlmId(int filmId, int count) {
         reviewValidationService.checkFilmId(filmId);
-        String sql = "SELECT * FROM reviews WHERE film_id = ? ORDER BY useful DESC, review_id LIMIT ?";
+        String sql = "SELECT * FROM reviews WHERE film_id = ? ORDER BY useful DESC LIMIT ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeReviews(rs), filmId, count);
     }
 

@@ -9,6 +9,8 @@ public interface ReviewsStorage {
 
     Reviews updateReviews(Reviews reviews);
 
+    Reviews updateUseful(Reviews reviews);
+
     Reviews getReviewsById(int id);
 
     void deleteReviewsById(int id);

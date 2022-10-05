@@ -19,6 +19,15 @@ public class ReviewValidationService {
     FilmStorage filmStorage;
 
     public void checkReviews(Reviews reviews) {
+        if (reviews.getUserId() == 0) {
+            throw new ValidationException("Не указан ID пользователя");
+        }
+        if (reviews.getFilmId() == 0) {
+            throw new ValidationException("Не указан ID фильма");
+        }
+        if (reviews.getIsPositive() == null) {
+            throw new ValidationException("Не указан тип отзыва");
+        }
         userStorage.getUserById(reviews.getUserId());
         filmStorage.getFilmById(reviews.getFilmId());
 
