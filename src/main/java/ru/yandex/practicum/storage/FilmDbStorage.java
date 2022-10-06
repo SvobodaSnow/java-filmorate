@@ -44,15 +44,14 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Film addFilm(Film film) {
         checkFilmValidation(film);
-        String sql = "INSERT INTO films (name, description, release_date, duration, rate, rating_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO films (name, description, release_date, duration, rating_id) " +
+                "VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
                 film.getName(),
                 film.getDescription(),
                 film.getReleaseDate(),
                 film.getDuration(),
-                film.getRate(),
                 film.getMpa().getId()
         );
 
@@ -75,8 +74,7 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Film updateFilm(Film film) {
         checkFilmValidation(film);
-        String sql = "UPDATE films " +
-                "SET name = ?, description = ?, release_date = ?, duration = ?, rating_id = ?, rate = ? " +
+        String sql = "UPDATE films SET name = ?, description = ?, release_date = ?, duration = ?, rating_id = ? " +
                 "WHERE film_id = ?";
         jdbcTemplate.update(
                 sql,
@@ -85,7 +83,6 @@ public class FilmDbStorage implements FilmStorage {
                 film.getReleaseDate(),
                 film.getDuration(),
                 film.getMpa().getId(),
-                film.getRate(),
                 film.getId()
         );
         Set<Genre> genres = film.getGenres();
@@ -132,7 +129,7 @@ public class FilmDbStorage implements FilmStorage {
         film.addLikeByUserId(userId);
         String sql = "INSERT INTO likes (film_id, user_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, filmId, userId);
-        return film;
+        return updateRateFilm(film);
     }
 
     @Override
@@ -142,6 +139,13 @@ public class FilmDbStorage implements FilmStorage {
         film.removeLikeByUserId(userId);
         String sql = "DELETE FROM likes WHERE film_id = ? AND user_id = ?";
         jdbcTemplate.update(sql, filmId, userId);
+        return updateRateFilm(film);
+    }
+
+    @Override
+    public Film updateRateFilm(Film film) {
+        String sql = "UPDATE films SET rate = ? WHERE film_id = ?";
+        jdbcTemplate.update(sql, film.getRate(), film.getId());
         return film;
     }
 
@@ -185,13 +189,25 @@ public class FilmDbStorage implements FilmStorage {
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeGenre(rs));
     }
 
+    @Override
+    public void deleteFilmById(int filmId) {
+        getFilmById(filmId);
+        String sql = "DELETE FROM films WHERE film_id = ?";
+        jdbcTemplate.update(sql, filmId);
+    }
+
+    @Override
+    public void deleteLikeFilmById(int filmId) {
+        String sql = "DELETE FROM likes WHERE film_id = ?";
+        jdbcTemplate.update(sql, filmId);
+    }
+
     public Genre makeGenre(ResultSet rs) throws SQLException {
         Genre genre = new Genre();
         genre.setId(rs.getInt("genre_id"));
         genre.setName(rs.getString("name"));
         return genre;
     }
-
 
     private Film makeFilms(ResultSet rs) throws SQLException {
         Film film = new Film();

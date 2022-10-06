@@ -27,4 +27,10 @@ public interface UserStorage {
     User confirmFriendRequest(int userId, int friendId);
 
     boolean checkRequestFriend(int userId, int friendId);
+
+    void deleteUserById(int userId);
+
+    void deleteAllFriendsUserById(int userId);
+
+    void deleteAllRequestsFriends(int userId);
 }

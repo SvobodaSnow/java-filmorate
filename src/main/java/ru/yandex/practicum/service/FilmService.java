@@ -72,4 +72,9 @@ public class FilmService {
     public List<Genre> getGenres() {
         return filmStorage.getGenres();
     }
+
+    public void deleteFilmById(int filmId) {
+        filmStorage.deleteLikeFilmById(filmId);
+        filmStorage.deleteFilmById(filmId);
+    }
 }

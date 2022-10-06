@@ -101,4 +101,11 @@ public class FilmController {
         log.info("Рейтинг MPA успешно сформирован");
         return genres;
     }
+
+    @DeleteMapping("/films/{filmId}")
+    public void deleteFilmById(@PathVariable int filmId) {
+        log.info("Получен запрос на удаление");
+        filmService.deleteFilmById(filmId);
+        log.info("Фильм успешно удален");
+    }
 }

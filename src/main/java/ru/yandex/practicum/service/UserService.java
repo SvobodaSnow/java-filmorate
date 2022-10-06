@@ -47,4 +47,10 @@ public class UserService {
     public User getUserById(int id) {
         return userStorage.getUserById(id);
     }
+
+    public void deleteUserById(int userId) {
+        userStorage.deleteAllFriendsUserById(userId);
+        userStorage.deleteAllRequestsFriends(userId);
+        userStorage.deleteUserById(userId);
+    }
 }

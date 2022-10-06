@@ -86,6 +86,11 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
+    public Film updateRateFilm(Film film) {
+        return null;
+    }
+
+    @Override
     public Mpa getMpaById(int id) {
         return mpa.get(id);
     }
@@ -103,5 +108,15 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public List<Genre> getGenres() {
         return new ArrayList<>(genres.values());
+    }
+
+    @Override
+    public void deleteFilmById(int filmId) {
+        films.get(filmId);
+    }
+
+    @Override
+    public void deleteLikeFilmById(int filmId) {
+        films.get(filmId).getLikedUsers().clear();
     }
 }

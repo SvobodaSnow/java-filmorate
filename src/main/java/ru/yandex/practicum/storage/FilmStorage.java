@@ -19,6 +19,8 @@ public interface FilmStorage {
 
     Film removeLikeFilm(int filmId, int userId);
 
+    Film updateRateFilm(Film film);
+
     Mpa getMpaById(int id);
 
     List<Mpa> getMpa();
@@ -26,4 +28,8 @@ public interface FilmStorage {
     Genre getGenreById(int id);
 
     List<Genre> getGenres();
+
+    void deleteFilmById(int filmId);
+
+    void deleteLikeFilmById(int filmId);
 }
