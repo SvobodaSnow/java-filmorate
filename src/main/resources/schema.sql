@@ -1,12 +1,3 @@
-drop table if exists films;
-drop table if exists FRIENDS;
-drop table if exists genre;
-drop table if exists genre_to_films;
-drop table if exists likes;
-drop table if exists MPA;
-drop table if exists unconfirmed_requests;
-drop table if exists users;
-
 CREATE TABLE IF NOT EXISTS films (
     film_id int PRIMARY KEY AUTO_INCREMENT,
     name varchar NOT NULL,
