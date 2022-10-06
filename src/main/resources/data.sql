@@ -1,4 +1,3 @@
-//Этот кусок сделан для отладки тестов в постмане
 ALTER TABLE users ALTER COLUMN user_id RESTART WITH 1;
 ALTER TABLE genre ALTER COLUMN genre_id RESTART WITH 1;
 ALTER TABLE mpa ALTER COLUMN rating_id RESTART WITH 1;
@@ -90,11 +89,3 @@ SELECT * FROM (SELECT 'NC-17')
 WHERE NOT EXISTS (
     SELECT name FROM MPA WHERE name='NC-17'
 ) LIMIT 1;
-
-
-
-select * from FILMS;
-
-select * from GENRE_TO_FILMS;
-
-select * from GENRE;
