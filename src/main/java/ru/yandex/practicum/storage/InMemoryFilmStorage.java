@@ -3,6 +3,7 @@ package ru.yandex.practicum.storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -118,5 +119,40 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public void deleteLikeFilmById(int filmId) {
         films.get(filmId).getLikedUsers().clear();
+    }
+
+    @Override
+    public Director addDirector(Director director) {
+        return null;
+    }
+
+    @Override
+    public Director updateDirector(Director director) {
+        return null;
+    }
+
+    @Override
+    public List<Director> getDirectors() {
+        return null;
+    }
+
+    @Override
+    public Director getDirectorById(int directorId) {
+        return null;
+    }
+
+    @Override
+    public void deleteDirecterById(int id) {
+
+    }
+
+    @Override
+    public List<Film> getFilmsByDirectorSortedByYear(int directorId) {
+        return null;
+    }
+
+    @Override
+    public List<Film> getFilmsByDirectorSortedByLikes(int directorId) {
+        return null;
     }
 }

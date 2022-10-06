@@ -1,5 +1,6 @@
 package ru.yandex.practicum.storage;
 
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -32,4 +33,18 @@ public interface FilmStorage {
     void deleteFilmById(int filmId);
 
     void deleteLikeFilmById(int filmId);
+
+    Director addDirector(Director director);
+
+    Director updateDirector(Director director);
+
+    List<Director> getDirectors();
+
+    Director getDirectorById(int directorId);
+
+    void deleteDirecterById(int id);
+
+    List<Film> getFilmsByDirectorSortedByYear(int directorId);
+
+    List<Film> getFilmsByDirectorSortedByLikes(int directorId);
 }

@@ -45,3 +45,13 @@ CREATE TABLE IF NOT EXISTS unconfirmed_requests (
     user_id int NOT NULL,
     friend_id int NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS directors (
+    director_id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS director_to_films (
+    director_id int NOT NULL,
+    film_id int NOT NULL
+);
