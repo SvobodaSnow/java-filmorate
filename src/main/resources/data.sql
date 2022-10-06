@@ -1,3 +1,25 @@
+//Этот кусок сделан для отладки тестов в постмане
+delete
+from GENRE_TO_FILMS;
+
+delete
+from LIKES;
+
+delete
+from FILMS;
+
+delete
+from MPA;
+
+delete
+from FRIENDS;
+
+delete
+from USERS;
+
+delete
+from GENRE;
+
 INSERT INTO genre (name)
 SELECT * FROM (SELECT 'Комедия')
 WHERE NOT EXISTS (

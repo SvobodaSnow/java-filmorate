@@ -63,11 +63,12 @@ public class FilmController {
     }
 
     @GetMapping("/films/popular")
-    public List<Film> getMostPopularFilms(@RequestParam(defaultValue = "10") int count) {
+    public List<Film> getMostPopularFilms(@RequestParam(defaultValue = "10", required = false) Integer count,
+                                          @RequestParam(required = false) Integer genreId,
+                                          @RequestParam(required = false) Integer year) {
         log.info("Получен запрос на получение " + count + " самых популярных фильма");
-        List<Film> mostPopularFilms = filmService.returnMostPopularFilm(count);
         log.info("Список самых популярных фильмов сформирован");
-        return mostPopularFilms;
+        return filmService.returnFilmOrderByYearAndGenre(count, genreId, year);
     }
 
     @GetMapping("/mpa/{mpaId}")
