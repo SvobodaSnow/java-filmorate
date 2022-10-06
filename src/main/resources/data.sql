@@ -1,5 +1,5 @@
 //Этот кусок сделан для отладки тестов в постмане
-delete
+/*delete
 from GENRE_TO_FILMS;
 
 delete
@@ -18,7 +18,7 @@ delete
 from USERS;
 
 delete
-from GENRE;
+from GENRE;*/
 
 INSERT INTO genre (name)
 SELECT * FROM (SELECT 'Комедия')

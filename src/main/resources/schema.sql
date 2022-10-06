@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS unconfirmed_requests (
 );
 
 //Этот кусок сделан для отладки в постмане.
+/*
 ALTER TABLE users ALTER COLUMN user_id RESTART WITH 1;
 ALTER TABLE genre ALTER COLUMN genre_id RESTART WITH 1;
 ALTER TABLE mpa ALTER COLUMN rating_id RESTART WITH 1;
-ALTER TABLE films ALTER COLUMN film_id RESTART WITH 1;
+ALTER TABLE films ALTER COLUMN film_id RESTART WITH 1;*/
