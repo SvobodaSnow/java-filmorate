@@ -1,6 +1,5 @@
 package ru.yandex.practicum.storage;
 
-import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.User;
 
 import java.util.List;
@@ -27,4 +26,10 @@ public interface UserStorage {
     User confirmFriendRequest(int userId, int friendId);
 
     boolean checkRequestFriend(int userId, int friendId);
+
+    void deleteUserById(int userId);
+
+    void deleteAllFriendsUserById(int userId);
+
+    void deleteAllRequestsFriends(int userId);
 }

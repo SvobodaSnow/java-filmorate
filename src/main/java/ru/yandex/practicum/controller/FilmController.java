@@ -3,6 +3,7 @@ package ru.yandex.practicum.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -71,6 +72,13 @@ public class FilmController {
         return filmService.returnFilmOrderByYearAndGenre(count, genreId, year);
     }
 
+    @DeleteMapping("/films/{filmId}")
+    public void deleteFilmById(@PathVariable int filmId) {
+        log.info("Получен запрос на удаление");
+        filmService.deleteFilmById(filmId);
+        log.info("Фильм успешно удален");
+    }
+
     @GetMapping("/mpa/{mpaId}")
     public Mpa getMpa(@PathVariable int mpaId) {
         log.info("Получен запрос на получение рейтинга MPA с ID " + mpaId);
@@ -101,5 +109,52 @@ public class FilmController {
         List<Genre> genres = filmService.getGenres();
         log.info("Рейтинг MPA успешно сформирован");
         return genres;
+    }
+
+    @PostMapping("/directors")
+    public Director addDirector(@RequestBody Director director) {
+        log.info("Получен запрос на добавление режиссёра");
+        Director newDirector = filmService.addDirector(director);
+        log.info("Режиссёр успешно добавлен");
+        return newDirector;
+    }
+
+    @PutMapping("/directors")
+    public Director updateDirector(@RequestBody Director director) {
+        log.info("Получен запрос на обновление режиссёра");
+        Director newDirector = filmService.updateDirector(director);
+        log.info("Режиссер успешно обновлен");
+        return newDirector;
+    }
+
+    @GetMapping("/directors")
+    public List<Director> getAllDirectors() {
+        log.info("Получен запрос на получение списка всех режиссёров");
+        List<Director> directors = filmService.getDirectors();
+        log.info("Список режиссёров сформирован");
+        return directors;
+    }
+
+    @GetMapping("/directors/{id}")
+    public Director getDirectorById(@PathVariable int id) {
+        log.info("Получен запрос на получение режиссёра с ID " + id);
+        Director director = filmService.getDirectorById(id);
+        log.info("Режиссер успешно получен");
+        return director;
+    }
+
+    @DeleteMapping("/directors/{id}")
+    public void deleteDirecterById(@PathVariable int id) {
+        log.info("Получен запрос на удаление режиссёра с ID " + id);
+        filmService.deleteDirecterById(id);
+        log.info("Режиссер успешно удален");
+    }
+
+    @GetMapping("/films/director/{directorId}")
+    public List<Film> getFilmsByDirector(@PathVariable int directorId, @RequestParam String sortBy) {
+        log.info("Получен запрос на получение всех фильмов режиссёра с ID " + directorId);
+        List<Film> films = filmService.getFilmsByDirector(directorId, sortBy);
+        log.info("Список фильмов успешно свормирован");
+        return films;
     }
 }

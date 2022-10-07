@@ -144,8 +144,9 @@ public class UserDbStorage implements UserStorage {
     public User confirmFriendRequest(int userId, int friendId) {
         getUserById(userId);
         getUserById(friendId);
-        addUserFriend(userId, friendId);
         deleteFriendRequest(friendId, userId);
+        addUserFriend(userId, friendId);
+        addUserFriend(friendId, userId);
         return getUserById(userId);
     }
 
@@ -156,6 +157,25 @@ public class UserDbStorage implements UserStorage {
         String sql = "SELECT * FROM unconfirmed_requests WHERE user_id = ? AND friend_id = ?";
         SqlRowSet userRows = jdbcTemplate.queryForRowSet(sql, userId, friendId);
         return userRows.next();
+    }
+
+    @Override
+    public void deleteUserById(int userId) {
+        getUserById(userId);
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
+    }
+
+    @Override
+    public void deleteAllFriendsUserById(int userId) {
+        String sql = "DELETE FROM friends WHERE user_id = ? OR friend_id = ?";
+        jdbcTemplate.update(sql, userId, userId);
+    }
+
+    @Override
+    public void deleteAllRequestsFriends(int userId) {
+        String sql = "DELETE FROM unconfirmed_requests WHERE user_id = ? OR friend_id = ?";
+        jdbcTemplate.update(sql, userId, userId);
     }
 
     private int getFriendsId(ResultSet rs) throws SQLException {
