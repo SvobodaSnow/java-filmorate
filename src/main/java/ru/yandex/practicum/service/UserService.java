@@ -1,16 +1,21 @@
 package ru.yandex.practicum.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.model.User;
 import ru.yandex.practicum.storage.UserStorage;
+import ru.yandex.practicum.storage.feed.FeedStorage;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserStorage userStorage;
+    private final UserStorage userStorage;
+    private final FeedStorage feedStorage;
+
 
     public User addFriend(int userId, int friendId) {
         User user;
@@ -19,12 +24,16 @@ public class UserService {
         } else {
             user = userStorage.sendFriendRequest(userId, friendId);
         }
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                userId, 3, 5, friendId);
         return userStorage.updateUser(user);
     }
 
     public User deleteFriend(int userId, int friendId) {
         User user = userStorage.deleteUserFriend(userId, friendId);
-        User friend = userStorage.deleteUserFriend(friendId, userId);
+        userStorage.deleteUserFriend(friendId, userId);
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(), userId,
+                3, 4, friendId);
         return userStorage.updateUser(user);
     }
 
