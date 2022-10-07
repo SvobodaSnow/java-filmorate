@@ -331,7 +331,7 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public List<Film> getFilmsByDirectorSortedByYear(int directorId) {
-        String sql = "SELECT * " +
+        String sql = "SELECT f.* " +
                      "FROM DIRECTORS d " +
                      "JOIN DIRECTOR_TO_FILMS dtf ON d.DIRECTOR_ID = dtf.DIRECTOR_ID " +
                      "JOIN FILMS f ON dtf.FILM_ID = f.FILM_ID " +
@@ -348,13 +348,60 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public List<Film> getFilmsByDirectorSortedByLikes(int directorId) {
-        String sql = "SELECT * " +
+        String sql = "SELECT f.* " +
                 "FROM DIRECTORS d " +
                 "JOIN DIRECTOR_TO_FILMS dtf ON d.DIRECTOR_ID = dtf.DIRECTOR_ID " +
                 "JOIN FILMS f ON dtf.FILM_ID = f.FILM_ID " +
                 "WHERE d.DIRECTOR_ID = ? " +
                 "ORDER BY rate";
         List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs), directorId);
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+            fillDirectorsForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
+    public List<Film> getFilmsSearchByDirector(String query) {
+        String sql = "SELECT f.*, d.name AS director_name " +
+                "FROM DIRECTORS d " +
+                "JOIN DIRECTOR_TO_FILMS dtf ON d.DIRECTOR_ID = dtf.DIRECTOR_ID " +
+                "JOIN FILMS f ON dtf.FILM_ID = f.FILM_ID " +
+                "WHERE LOWER(d.name) LIKE LOWER('%" + query + "%') " +
+                "ORDER BY rate DESC";
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs));
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+            fillDirectorsForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
+    public List<Film> getFilmsSearchByTitle(String query) {
+        String sql = "SELECT * FROM films WHERE LOWER(name) LIKE LOWER('%" + query + "%') ORDER BY rate DESC";
+        log.info(sql);
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs));
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+            fillDirectorsForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
+    public List<Film> getFilmsSearchByDirectorAndTitle(String query) {
+        String sql = "SELECT f.*, d.name AS director_name " +
+                "FROM DIRECTORS d " +
+                "RIGHT JOIN DIRECTOR_TO_FILMS dtf ON d.DIRECTOR_ID = dtf.DIRECTOR_ID " +
+                "RIGHT JOIN FILMS f ON dtf.FILM_ID = f.FILM_ID " +
+                "WHERE LOWER(d.name) LIKE LOWER('%" + query + "%') OR LOWER(f.name) LIKE LOWER('%" + query + "%') " +
+                "ORDER BY rate DESC";
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs));
         for (Film film : films) {
             fillFilmLikeListForFilm(film);
             fillGenresForFilm(film);

@@ -157,4 +157,10 @@ public class FilmController {
         log.info("Список фильмов успешно свормирован");
         return films;
     }
+
+    @GetMapping("/films/search")
+    public List<Film> getFilmBySearch(@RequestParam String query, @RequestParam String by) {
+        log.info("Получен запрос на поиск фильма");
+        return filmService.getFilmsBySearch(query, by);
+    }
 }

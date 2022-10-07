@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Component
 @Qualifier("inMemoryFilmStorage")
-public class InMemoryFilmStorage implements FilmStorage {
+public abstract class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
     private final Map<Integer, Genre> genres = Map.ofEntries(
             Map.entry(1, new Genre(1, "Комедия")),

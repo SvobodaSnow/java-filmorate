@@ -134,4 +134,25 @@ public class FilmService {
             throw new ValidationException("Неверный параметр сортировки");
         }
     }
+
+    public List<Film> getFilmsBySearch(String query, String by) {
+        boolean isDirector = false;
+        boolean isTitle = false;
+        for (String s : by.split(",")) {
+            if (s.toLowerCase().equals("director")) {
+                isDirector = true;
+            } else if (s.toLowerCase().equals("title")) {
+                isTitle = true;
+            } else {
+                throw new IllegalArgumentException("Некорректный атрибут query");
+            }
+        }
+        if (isDirector && !isTitle) {
+            return filmStorage.getFilmsSearchByDirector(query);
+        } else if (!isDirector && isTitle) {
+            return filmStorage.getFilmsSearchByTitle(query);
+        } else {
+            return filmStorage.getFilmsSearchByDirectorAndTitle(query);
+        }
+    }
 }
