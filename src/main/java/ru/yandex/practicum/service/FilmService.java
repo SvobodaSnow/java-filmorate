@@ -43,6 +43,19 @@ public class FilmService {
         return films.stream().limit(maxMostPopularFilm).collect(Collectors.toList());
     }
 
+    public List<Film> returnFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year) {
+        if (genreId != null && year != null) {
+            return filmStorage.getFilmOrderByYearAndGenre(count, genreId, year);
+        }
+        if (genreId == null && year == null) {
+            return returnMostPopularFilm(count);
+        }
+        if (year == null) {
+            return filmStorage.getFilmOrderByGenre(count, genreId);
+        }
+        return filmStorage.getFilmOrderByYear(count, year);
+    }
+
     public List<Film> findAll() {
         return filmStorage.findAll();
     }

@@ -55,3 +55,22 @@ CREATE TABLE IF NOT EXISTS director_to_films (
     director_id int NOT NULL,
     film_id int NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS reviews (
+    review_id int PRIMARY KEY AUTO_INCREMENT,
+    content varchar NOT NULL,
+    isPositive boolean,
+    user_id int NOT NULL,
+    film_id int NOT NULL,
+    useful int DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS likes_reviews (
+    review_id int NOT NULL,
+    user_id int NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS dislikes_reviews (
+    review_id int NOT NULL,
+    user_id int NOT NULL
+);
