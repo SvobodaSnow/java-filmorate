@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS unconfirmed_requests (
     friend_id int NOT NULL
 );
 
+<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS directors (
     director_id int PRIMARY KEY AUTO_INCREMENT,
     name varchar NOT NULL
@@ -56,6 +57,8 @@ CREATE TABLE IF NOT EXISTS director_to_films (
     film_id int NOT NULL
 );
 
+=======
+>>>>>>> develop
 CREATE TABLE IF NOT EXISTS reviews (
     review_id int PRIMARY KEY AUTO_INCREMENT,
     content varchar NOT NULL,

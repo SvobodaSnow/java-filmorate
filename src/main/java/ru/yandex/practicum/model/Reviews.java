@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 public class Reviews {
     private int reviewId;
     private String content;
+<<<<<<< HEAD
+=======
+    //@Value("null")
+>>>>>>> develop
     @JsonProperty("isPositive")
     private Boolean isPositive;
     private int userId;

@@ -6584,6 +6584,7 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 <<<<<<< HEAD
+<<<<<<< HEAD
 2022-10-06 14:47:04 jdbc[3]: exception
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
@@ -7196,6 +7197,8 @@ Column "KEY_SEQ" not found [42122-210]
 org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.212/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.212/7]" [50000-212]
 =======
+=======
+>>>>>>> develop
 2022-10-06 09:08:00 jdbc[3]: exception
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
@@ -7363,6 +7366,9 @@ select FILMS.FILM_ID,
 2022-10-06 13:43:02 database: flush
 org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.212/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.212/7]" [50000-212]
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 	at org.h2.message.DbException.get(DbException.java:212)
 	at org.h2.message.DbException.convert(DbException.java:395)
@@ -7417,6 +7423,7 @@ General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Ar
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
 	at ru.yandex.practicum.FilmorateApplication.main(FilmorateApplication.java:10)
 <<<<<<< HEAD
+<<<<<<< HEAD
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.212/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.212/7]" [50000-212]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
@@ -7424,17 +7431,23 @@ General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gf
 	... 52 more
 Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.212/7]
 =======
+=======
+>>>>>>> develop
 Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.212/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.212/7]" [50000-212]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:554)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	... 52 more
 Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.212/7]
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:1004)
 	at org.h2.mvstore.FileStore.open(FileStore.java:163)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:449)
 	... 46 more
+<<<<<<< HEAD
 <<<<<<< HEAD
 2022-10-06 20:39:35 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "[*]UPDATES films SET rate = ? WHERE film_id = ?"; ожидалось "UPDATE, USE"
@@ -7554,6 +7567,8 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.210/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/gfdkb/OneDrive/Рабочий стол/develop/java-filmorate/db/filmorate.mv.db [2.1.210/7]" [50000-210]
 =======
+=======
+>>>>>>> develop
 2022-10-06 13:43:35 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Параметр "#3" не установлен
 Parameter "#3" is not set; SQL statement:
@@ -8118,6 +8133,9 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy
 2022-10-06 11:34:50 database: flush
 org.h2.message.DbException: Внутренняя ошибка: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.210/7]"
 General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Artemiy/dev/Spring/java-filmorate-group/db/filmorate.mv.db [2.1.210/7]" [50000-210]
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 	at org.h2.message.DbException.get(DbException.java:216)
 	at org.h2.message.DbException.convert(DbException.java:414)
@@ -8134,6 +8152,7 @@ General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Ar
 	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
 	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
 	at org.h2.Driver.connect(Driver.java:59)
+<<<<<<< HEAD
 <<<<<<< HEAD
 	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.lambda$0(JDBCDataSource.java:191)
 	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.lambda$1(JDBCDataSource.java:210)
@@ -8207,6 +8226,8 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 2022-10-07 00:58:25 jdbc[3]: exception
 =======
+=======
+>>>>>>> develop
 	at com.intellij.database.remote.jdbc.helpers.JdbcHelperImpl.connect(JdbcHelperImpl.java:639)
 	at com.intellij.database.remote.jdbc.impl.RemoteDriverImpl.connect(RemoteDriverImpl.java:56)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -8389,6 +8410,9 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:829)
 2022-10-07 14:30:38 jdbc[3]: exception
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
@@ -8412,6 +8436,7 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:72)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+<<<<<<< HEAD
 <<<<<<< HEAD
 2022-10-07 02:17:34 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Ошибка сериализации, причина: "java.io.NotSerializableException: ru.yandex.practicum.model.Director"
@@ -8684,6 +8709,9 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 =======
 2022-10-07 14:30:45 jdbc[3]: exception
 >>>>>>> develop
+=======
+2022-10-07 14:30:45 jdbc[3]: exception
+>>>>>>> develop
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "KEY_SEQ" не найден
 Column "KEY_SEQ" not found [42122-210]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:521)
@@ -8713,6 +8741,7 @@ Column "KEY_SEQ" not found [42122-210]
 	at org.jkiss.dbeaver.ui.controls.resultset.ResultSetViewer$ResultSetDataPumpJob.run(ResultSetViewer.java:4945)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+<<<<<<< HEAD
 <<<<<<< HEAD
 2022-10-07 02:20:29 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Ошибка сериализации, причина: "java.io.NotSerializableException: ru.yandex.practicum.model.Director"
@@ -8797,6 +8826,9 @@ Caused by: java.io.NotSerializableException: ru.yandex.practicum.model.Director
 =======
 2022-10-07 14:59:27 jdbc[3]: exception
 >>>>>>> develop
+=======
+2022-10-07 14:59:27 jdbc[3]: exception
+>>>>>>> develop
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
 	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:177)
@@ -8827,7 +8859,11 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 <<<<<<< HEAD
+<<<<<<< HEAD
 2022-10-07 02:24:55 jdbc[3]: exception
+=======
+2022-10-07 15:00:49 jdbc[3]: exception
+>>>>>>> develop
 =======
 2022-10-07 15:00:49 jdbc[3]: exception
 >>>>>>> develop
@@ -8860,6 +8896,7 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:72)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+<<<<<<< HEAD
 <<<<<<< HEAD
 2022-10-07 02:25:02 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "KEY_SEQ" не найден
@@ -8925,6 +8962,9 @@ Column "KEY_SEQ" not found [42122-210]
 =======
 2022-10-07 15:02:23 jdbc[3]: exception
 >>>>>>> develop
+=======
+2022-10-07 15:02:23 jdbc[3]: exception
+>>>>>>> develop
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
 	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:177)
@@ -8955,7 +8995,11 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 <<<<<<< HEAD
+<<<<<<< HEAD
 2022-10-07 02:42:12 jdbc[3]: exception
+=======
+2022-10-07 15:04:37 jdbc[3]: exception
+>>>>>>> develop
 =======
 2022-10-07 15:04:37 jdbc[3]: exception
 >>>>>>> develop
@@ -8988,6 +9032,7 @@ java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supporte
 	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:72)
 	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+<<<<<<< HEAD
 <<<<<<< HEAD
 2022-10-07 02:43:45 jdbc[3]: exception
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
@@ -9272,6 +9317,9 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибк
 Syntax error in SQL statement "[*]<<<<<<< HEAD CREATE TABLE IF NOT EXISTS directors ( director_id int PRIMARY KEY AUTO_INCREMENT, name varchar NOT NULL )"; SQL statement:
 <<<<<<< HEAD CREATE TABLE IF NOT EXISTS directors ( director_id int PRIMARY KEY AUTO_INCREMENT, name varchar NOT NULL ) [42000-212]
 2022-10-07 15:32:08 jdbc[3]: exception
+=======
+2022-10-07 15:11:01 jdbc[3]: exception
+>>>>>>> develop
 java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
 	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
 	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:177)
