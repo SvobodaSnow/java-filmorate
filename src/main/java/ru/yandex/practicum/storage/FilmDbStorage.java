@@ -180,6 +180,54 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
+    public List<Film> getFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year) {
+        String sql = "select FILMS.FILM_ID AS film_id, FILMS.name as name, description, release_date, duration, rate, FILMS.RATING_ID as rating_id, " +
+                "count(USER_ID) + RATE as CNT from FILMS left join LIKES L on FILMS.FILM_ID = L.FILM_ID " +
+                "LEFT JOIN GENRE_TO_FILMS GF ON FILMS.FILM_ID = GF.FILM_ID INNER JOIN GENRE G on G.GENRE_ID = GF.GENRE_ID " +
+                "where YEAR(FILMS.RELEASE_DATE) = ? AND GF.GENRE_ID = ? " +
+                "group by FILMS.FILM_ID, FILMS.name, description, release_date, duration, FILMS.RATING_ID, RATE " +
+                "order by CNT desc limit ?";
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs), year, genreId, count);
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
+    public List<Film> getFilmOrderByYear(Integer count, Integer year) {
+        String sql = "select FILMS.FILM_ID AS film_id, FILMS.name as name, description, release_date, duration, rate, FILMS.RATING_ID as rating_id, " +
+                "count(USER_ID) + RATE as CNT from FILMS left join LIKES L on FILMS.FILM_ID = L.FILM_ID " +
+                "LEFT JOIN GENRE_TO_FILMS GF ON FILMS.FILM_ID = GF.FILM_ID INNER JOIN GENRE G on G.GENRE_ID = GF.GENRE_ID " +
+                "where YEAR(FILMS.RELEASE_DATE) = ? " +
+                "group by FILMS.FILM_ID, FILMS.name, description, release_date, duration, FILMS.RATING_ID, RATE " +
+                "order by CNT desc limit ?";
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs), year,  count);
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
+    public List<Film> getFilmOrderByGenre(Integer count, Integer genreId) {
+        String sql = "select FILMS.FILM_ID AS film_id, FILMS.name as name, description, release_date, duration, rate, FILMS.RATING_ID as rating_id, " +
+                "count(USER_ID) + RATE as CNT from FILMS left join LIKES L on FILMS.FILM_ID = L.FILM_ID " +
+                "LEFT JOIN GENRE_TO_FILMS GF ON FILMS.FILM_ID = GF.FILM_ID INNER JOIN GENRE G on G.GENRE_ID = GF.GENRE_ID " +
+                "where GF.GENRE_ID = ? " +
+                "group by FILMS.FILM_ID, FILMS.name, description, release_date, duration, FILMS.RATING_ID, RATE " +
+                "order by CNT desc limit ?";
+        List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilms(rs), genreId,  count);
+        for (Film film : films) {
+            fillFilmLikeListForFilm(film);
+            fillGenresForFilm(film);
+        }
+        return films;
+    }
+
+    @Override
     public List<Genre> getGenres() {
         String sql = "SELECT * FROM genre";
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeGenre(rs));

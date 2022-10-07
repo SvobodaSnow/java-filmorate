@@ -104,4 +104,19 @@ public class InMemoryFilmStorage implements FilmStorage {
     public List<Genre> getGenres() {
         return new ArrayList<>(genres.values());
     }
+
+    @Override
+    public List<Film> getFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year) {
+        return new ArrayList<>(films.values());
+    }
+
+    @Override
+    public List<Film> getFilmOrderByYear(Integer count, Integer year) {
+        return new ArrayList<>(films.values());
+    }
+
+    @Override
+    public List<Film> getFilmOrderByGenre(Integer count, Integer genreId) {
+        return new ArrayList<>(films.values());
+    }
 }
