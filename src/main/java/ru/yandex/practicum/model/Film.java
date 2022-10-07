@@ -20,6 +20,7 @@ public class Film {
     private int rate;
     private Set<Integer> likedUsers = new HashSet<>();
     private Set<Genre> genres = new HashSet<>();
+    private Set<Director> directors = new HashSet<>();
     private Mpa mpa;
 
     public void addLikeByUser(User user) {

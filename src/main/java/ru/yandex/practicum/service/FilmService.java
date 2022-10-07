@@ -2,6 +2,8 @@ package ru.yandex.practicum.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.exceptions.ValidationException;
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -41,6 +43,19 @@ public class FilmService {
         return films.stream().limit(maxMostPopularFilm).collect(Collectors.toList());
     }
 
+    public List<Film> returnFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year) {
+        if (genreId != null && year != null) {
+            return filmStorage.getFilmOrderByYearAndGenre(count, genreId, year);
+        }
+        if (genreId == null && year == null) {
+            return returnMostPopularFilm(count);
+        }
+        if (year == null) {
+            return filmStorage.getFilmOrderByGenre(count, genreId);
+        }
+        return filmStorage.getFilmOrderByYear(count, year);
+    }
+
     public List<Film> findAll() {
         return filmStorage.findAll();
     }
@@ -71,5 +86,41 @@ public class FilmService {
 
     public List<Genre> getGenres() {
         return filmStorage.getGenres();
+    }
+
+    public void deleteFilmById(int filmId) {
+        filmStorage.deleteLikeFilmById(filmId);
+        filmStorage.deleteFilmById(filmId);
+    }
+
+    public Director addDirector(Director director) {
+        return filmStorage.addDirector(director);
+    }
+
+    public Director updateDirector(Director director) {
+        return filmStorage.updateDirector(director);
+    }
+
+    public List<Director> getDirectors() {
+        return filmStorage.getDirectors();
+    }
+
+    public Director getDirectorById(int directorId) {
+        return filmStorage.getDirectorById(directorId);
+    }
+
+    public void deleteDirecterById(int id) {
+        filmStorage.deleteDirecterById(id);
+    }
+
+    public List<Film> getFilmsByDirector(int directorId, String sortingParameter) {
+        getDirectorById(directorId);
+        if (sortingParameter.equals("year")) {
+            return filmStorage.getFilmsByDirectorSortedByYear(directorId);
+        } else if (sortingParameter.equals("likes")) {
+            return filmStorage.getFilmsByDirectorSortedByLikes(directorId);
+        } else {
+            throw new ValidationException("Неверный параметр сортировки");
+        }
     }
 }

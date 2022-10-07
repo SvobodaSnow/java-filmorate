@@ -124,4 +124,20 @@ public class InMemoryUserStorage implements UserStorage {
         userValidationService.checkUserAvailability(users, friendId);
         return users.get(userId).getReceivedFriendshipRequests().contains(friendId);
     }
+
+    @Override
+    public void deleteUserById(int userId) {
+        users.remove(userId);
+    }
+
+    @Override
+    public void deleteAllFriendsUserById(int userId) {
+        users.get(userId).getFriends().clear();
+    }
+
+    @Override
+    public void deleteAllRequestsFriends(int userId) {
+        users.get(userId).getReceivedFriendshipRequests().clear();
+        users.get(userId).getSentFriendshipRequests().clear();
+    }
 }

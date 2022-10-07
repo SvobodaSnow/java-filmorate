@@ -23,6 +23,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film newFilm = filmController.crete(film);
         film.setId(newFilm.getId());
@@ -38,6 +39,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -61,6 +63,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
@@ -81,6 +84,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
@@ -95,6 +99,7 @@ public class FilmControllerTest {
                 "Test Description",
                 localDateTest, 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -115,6 +120,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film newFilmOne = filmController.crete(film);
         film.setId(newFilmOne.getId());
@@ -130,6 +136,7 @@ public class FilmControllerTest {
                 localDateTest,
                 -125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -150,6 +157,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Assertions.assertThrows(ValidationException.class, () -> {
             Film newFilmOne = filmController.crete(film);
@@ -168,6 +176,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 10",
@@ -175,6 +184,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -195,6 +205,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 11",
@@ -202,6 +213,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -224,6 +236,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 12", "Test Update Description Description " +
@@ -232,6 +245,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -253,6 +267,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 13",
@@ -262,6 +277,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -282,6 +298,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 14",
@@ -289,6 +306,7 @@ public class FilmControllerTest {
                 LocalDate.of(1800, 5, 15),
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -310,6 +328,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 15",
@@ -317,6 +336,7 @@ public class FilmControllerTest {
                 LocalDate.of(1895, 12, 28),
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -337,6 +357,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 16",
@@ -344,6 +365,7 @@ public class FilmControllerTest {
                 localDateTest,
                 -125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -365,6 +387,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film updateFilm = new Film(10,
                 "Test Name 17",
@@ -372,6 +395,7 @@ public class FilmControllerTest {
                 localDateTest,
                 0,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());
@@ -393,6 +417,7 @@ public class FilmControllerTest {
                 0,
                 new HashSet<>(),
                 new HashSet<>(),
+                new HashSet<>(),
                 new Mpa());
         Film filmTwo = new Film(10,
                 "Test Name 19",
@@ -400,6 +425,7 @@ public class FilmControllerTest {
                 localDateTest,
                 125,
                 0,
+                new HashSet<>(),
                 new HashSet<>(),
                 new HashSet<>(),
                 new Mpa());

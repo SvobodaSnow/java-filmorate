@@ -1,5 +1,6 @@
 package ru.yandex.practicum.storage;
 
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -19,6 +20,8 @@ public interface FilmStorage {
 
     Film removeLikeFilm(int filmId, int userId);
 
+    Film updateRateFilm(Film film);
+
     Mpa getMpaById(int id);
 
     List<Mpa> getMpa();
@@ -26,4 +29,28 @@ public interface FilmStorage {
     Genre getGenreById(int id);
 
     List<Genre> getGenres();
+
+    void deleteFilmById(int filmId);
+
+    void deleteLikeFilmById(int filmId);
+
+    Director addDirector(Director director);
+
+    Director updateDirector(Director director);
+
+    List<Director> getDirectors();
+
+    Director getDirectorById(int directorId);
+
+    void deleteDirecterById(int id);
+
+    List<Film> getFilmsByDirectorSortedByYear(int directorId);
+
+    List<Film> getFilmsByDirectorSortedByLikes(int directorId);
+
+    List<Film> getFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year);
+
+    List<Film> getFilmOrderByYear(Integer count, Integer year);
+
+    List<Film> getFilmOrderByGenre(Integer count, Integer genreId);
 }

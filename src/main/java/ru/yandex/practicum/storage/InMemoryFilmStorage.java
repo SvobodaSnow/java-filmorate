@@ -3,6 +3,7 @@ package ru.yandex.practicum.storage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.model.Director;
 import ru.yandex.practicum.model.Film;
 import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
@@ -86,6 +87,11 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
+    public Film updateRateFilm(Film film) {
+        return null;
+    }
+
+    @Override
     public Mpa getMpaById(int id) {
         return mpa.get(id);
     }
@@ -103,5 +109,64 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public List<Genre> getGenres() {
         return new ArrayList<>(genres.values());
+    }
+
+    @Override
+    public void deleteFilmById(int filmId) {
+        films.get(filmId);
+    }
+
+    @Override
+    public void deleteLikeFilmById(int filmId) {
+        films.get(filmId).getLikedUsers().clear();
+    }
+
+    @Override
+    public Director addDirector(Director director) {
+        return null;
+    }
+
+    @Override
+    public Director updateDirector(Director director) {
+        return null;
+    }
+
+    @Override
+    public List<Director> getDirectors() {
+        return null;
+    }
+
+    @Override
+    public Director getDirectorById(int directorId) {
+        return null;
+    }
+
+    @Override
+    public void deleteDirecterById(int id) {
+
+    }
+
+    @Override
+    public List<Film> getFilmsByDirectorSortedByYear(int directorId) {
+        return null;
+    }
+
+    @Override
+    public List<Film> getFilmsByDirectorSortedByLikes(int directorId) {
+        return null;
+    }
+
+    public List<Film> getFilmOrderByYearAndGenre(Integer count, Integer genreId, Integer year) {
+        return new ArrayList<>(films.values());
+    }
+
+    @Override
+    public List<Film> getFilmOrderByYear(Integer count, Integer year) {
+        return new ArrayList<>(films.values());
+    }
+
+    @Override
+    public List<Film> getFilmOrderByGenre(Integer count, Integer genreId) {
+        return new ArrayList<>(films.values());
     }
 }
