@@ -1,3 +1,19 @@
+drop table if exists films cascade ;
+drop table if exists likes cascade ;
+drop table if exists MPA cascade ;
+drop table if exists genre_to_films cascade ;
+drop table if exists genre cascade ;
+drop table if exists users cascade ;
+drop table if exists friends cascade ;
+drop table if exists unconfirmed_requests cascade ;
+drop table if exists directors cascade ;
+drop table if exists director_to_films cascade ;
+drop table if exists reviews cascade ;
+drop table if exists likes_reviews cascade ;
+drop table if exists dislikes_reviews cascade ;
+drop table if exists GUIDE cascade ;
+drop table if exists FEED cascade ;
+
 CREATE TABLE IF NOT EXISTS films (
     film_id int PRIMARY KEY AUTO_INCREMENT,
     name varchar NOT NULL,

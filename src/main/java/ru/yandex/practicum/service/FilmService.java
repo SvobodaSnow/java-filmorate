@@ -1,5 +1,6 @@
 package ru.yandex.practicum.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.exceptions.ValidationException;
@@ -9,24 +10,34 @@ import ru.yandex.practicum.model.Genre;
 import ru.yandex.practicum.model.Mpa;
 import ru.yandex.practicum.storage.FilmStorage;
 import ru.yandex.practicum.storage.UserStorage;
+import ru.yandex.practicum.storage.feed.FeedStorage;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FilmService {
-    @Autowired
-    private FilmStorage filmStorage;
-    @Autowired
-    private UserStorage userStorage;
+
+    private final FilmStorage filmStorage;
+    private final UserStorage userStorage;
+    private final FeedStorage feedStorage;
 
     public Film addLike(int filmId, int userId) {
-        return filmStorage.updateFilm(filmStorage.addLikeFilm(filmId, userId));
+        Film newFilm = filmStorage.updateFilm(filmStorage.addLikeFilm(filmId, userId));
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                userId, 1, 5, filmId);
+        return newFilm;
     }
 
     public Film removeLike(int filmId, int userId) {
-        return filmStorage.updateFilm(filmStorage.removeLikeFilm(filmId, userId));
+        Film newFilm = filmStorage.updateFilm(filmStorage.removeLikeFilm(filmId, userId));
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                userId, 1, 4, filmId);
+        return newFilm;
     }
 
     public List<Film> returnMostPopularFilm(int maxMostPopularFilm) {

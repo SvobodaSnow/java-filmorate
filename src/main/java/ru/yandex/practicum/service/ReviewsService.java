@@ -1,27 +1,46 @@
 package ru.yandex.practicum.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.exceptions.ValidationException;
+import ru.yandex.practicum.model.Feed;
 import ru.yandex.practicum.model.Reviews;
 import ru.yandex.practicum.storage.ReviewsDbStorage;
 import ru.yandex.practicum.storage.ReviewsStorage;
+import ru.yandex.practicum.storage.feed.FeedStorage;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewsService {
-    @Autowired
-    private ReviewsStorage reviewsStorage;
-    @Autowired
-    private ReviewValidationService reviewValidationService;
+    private final ReviewsStorage reviewsStorage;
+    private final ReviewValidationService reviewValidationService;
+    private final FeedStorage feedStorage;
 
-    public Reviews addReviews (Reviews newReviews) {
-        return reviewsStorage.addReviews(newReviews);
+    public Reviews addReviews (Reviews review) {
+        Reviews newReview = reviewsStorage.addReviews(review);
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                review.getUserId(),
+                2,
+                5,
+                newReview.getReviewId());
+        return newReview;
     }
 
     public Reviews updateReviews (Reviews reviews) {
-        return reviewsStorage.updateReviews(reviews);
+        Reviews newReview = reviewsStorage.updateReviews(reviews);
+        Feed feed = feedStorage.getFeedByReviewId(reviews.getReviewId())
+                .orElseThrow(() -> new IllegalArgumentException("Ревью с таким id отсутсвует"));
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                feed.getUserId(),
+                2,
+                6,
+                reviews.getReviewId());
+        return newReview;
     }
 
     public Reviews getReviewsById(int id) {
@@ -29,6 +48,13 @@ public class ReviewsService {
     }
 
     public void deleteReviewsById(int id) {
+        Feed feed = feedStorage.getFeedByReviewId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Ревью с таким id отсутсвует"));
+        feedStorage.addFeed(Instant.parse(LocalDateTime.now() + "z").toEpochMilli(),
+                feed.getUserId(),
+                2,
+                4,
+                feed.getEntityId());
         reviewsStorage.deleteReviewsById(id);
     }
 
