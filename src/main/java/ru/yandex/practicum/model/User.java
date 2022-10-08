@@ -61,3 +61,4 @@ public class User {
         friends.add(friend.getId());
     }
 }
+
