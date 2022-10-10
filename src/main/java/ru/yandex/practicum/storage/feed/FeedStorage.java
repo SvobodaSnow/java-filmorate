@@ -1,6 +1,6 @@
 package ru.yandex.practicum.storage.feed;
 
-import ru.yandex.practicum.model.Feed;
+import ru.yandex.practicum.model.feed.Feed;
 
 import java.util.List;
 import java.util.Optional;

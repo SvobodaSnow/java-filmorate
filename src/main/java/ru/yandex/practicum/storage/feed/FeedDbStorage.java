@@ -3,7 +3,7 @@ package ru.yandex.practicum.storage.feed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.model.Feed;
+import ru.yandex.practicum.model.feed.Feed;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

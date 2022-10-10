@@ -14,5 +14,3 @@ Template repository for Filmorate project.
 -Функциональность "Поиск"
 
 -Функциональность "Лента событий"
-
-test-fix
