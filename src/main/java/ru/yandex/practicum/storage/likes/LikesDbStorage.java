@@ -68,6 +68,16 @@ public class LikesDbStorage implements LikesStorage {
         film.setLikedUsers(new HashSet<>(fillFilmLikeList(film.getId())));
     }
 
+    @Override
+    public List<Integer> fillFilmLikeListForFilm(int userId) {
+        String sql = "SELECT * FROM likes WHERE user_id = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> getFilmId(rs), userId);
+    }
+
+    private int getFilmId(ResultSet rs) throws SQLException {
+        return rs.getInt("film_id");
+    }
+
     private List<Integer> fillFilmLikeList(int id) {
         String sql = "SELECT user_id FROM likes WHERE film_id = ?";
         return jdbcTemplate.query(

@@ -3,6 +3,7 @@ package ru.yandex.practicum.controller.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.model.film.Film;
 import ru.yandex.practicum.model.user.User;
 import ru.yandex.practicum.service.user.UserService;
 
@@ -84,5 +85,12 @@ public class UserController {
     public void deleteUserById(@PathVariable int userId) {
         userService.deleteUserById(userId);
         log.info("Пользователь с ID " + userId + " успешно удален");
+    }
+
+    @GetMapping("/users/{id}/recommendations")
+    public List<Film> getRecommendationsFilmsByIdUser(@PathVariable int id) {
+        List<Film> films = userService.getRecommendationsFilmsByIdUser(id);
+        log.info("Список рекомендованных фильмов для пользователя с ID " + id + " успешно сформирован");
+        return films;
     }
 }

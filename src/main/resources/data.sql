@@ -1,29 +1,3 @@
-ALTER TABLE users ALTER COLUMN user_id RESTART WITH 1;
-ALTER TABLE genre ALTER COLUMN genre_id RESTART WITH 1;
-ALTER TABLE mpa ALTER COLUMN rating_id RESTART WITH 1;
-ALTER TABLE films ALTER COLUMN film_id RESTART WITH 1;
-
-delete
-from GENRE_TO_FILMS;
-
-delete
-from LIKES;
-
-delete
-from FILMS;
-
-delete
-from MPA;
-
-delete
-from FRIENDS;
-
-delete
-from USERS;
-
-delete
-from GENRE;
-
 INSERT INTO genre (name)
 SELECT * FROM (SELECT 'Комедия')
 WHERE NOT EXISTS (

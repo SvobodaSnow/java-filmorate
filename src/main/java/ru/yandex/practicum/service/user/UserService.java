@@ -2,7 +2,11 @@ package ru.yandex.practicum.service.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.model.film.Film;
 import ru.yandex.practicum.model.user.User;
+import ru.yandex.practicum.service.film.FilmService;
+import ru.yandex.practicum.storage.film.FilmStorage;
+import ru.yandex.practicum.storage.likes.LikesStorage;
 import ru.yandex.practicum.storage.user.FriendsStorage;
 import ru.yandex.practicum.storage.user.UnconfirmedRequestStorage;
 import ru.yandex.practicum.storage.user.UserStorage;
@@ -10,8 +14,7 @@ import ru.yandex.practicum.storage.feed.FeedStorage;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,8 @@ public class UserService {
     private final FeedStorage feedStorage;
     private final FriendsStorage friendsStorage;
     private final UnconfirmedRequestStorage unconfirmedRequestStorage;
+    private final LikesStorage likesStorage;
+    private final FilmService filmService;
 
     public User addFriend(int userId, int friendId) {
         userStorage.getUserById(userId);
@@ -83,5 +88,52 @@ public class UserService {
         friendsStorage.deleteAllFriendsUserById(userId);
         unconfirmedRequestStorage.deleteAllRequestsFriends(userId);
         userStorage.deleteUserById(userId);
+    }
+
+    public List<Film> getRecommendationsFilmsByIdUser(int userId) {
+        User desiredUser = getUserById(userId);
+
+        List<User> users = findAll();
+        Map<User, List<Integer>> likesUsers = new HashMap<>();
+        for (User user : users) {
+            likesUsers.put(user, likesStorage.fillFilmLikeListForFilm(user.getId()));
+        }
+
+        List<Integer> desiredUserLikes = likesUsers.get(desiredUser);
+        likesUsers.remove(desiredUser);
+
+        Map<User, Integer> crossingLikes = new HashMap<>();
+        int count;
+        int maxCount = 0;
+        for (Map.Entry<User, List<Integer>> likesUser : likesUsers.entrySet()) {
+            count = 0;
+            for (Integer likeDesiredUser : desiredUserLikes) {
+                if (likesUser.getValue().contains(likeDesiredUser)) {
+                    count ++;
+                }
+            }
+            if (maxCount == count) {
+                crossingLikes.put(likesUser.getKey(), count);
+            }
+            if (maxCount < count) {
+                maxCount = count;
+                crossingLikes.clear();
+                crossingLikes.put(likesUser.getKey(), count);
+            }
+        }
+
+        Set<Integer> filmsId = new HashSet<>();
+        for (User user : crossingLikes.keySet()) {
+            List<Integer> addFilmId = likesUsers.get(user);
+            addFilmId.removeAll(desiredUserLikes);
+            filmsId.addAll(addFilmId);
+        }
+
+        List<Film> films = new ArrayList<>();
+        for (Integer filmId : filmsId) {
+            films.add(filmService.getFilmById(filmId));
+        }
+
+        return films;
     }
 }

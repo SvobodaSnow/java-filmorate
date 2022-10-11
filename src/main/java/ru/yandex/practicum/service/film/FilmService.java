@@ -133,8 +133,8 @@ public class FilmService {
         Film newFilm = filmStorage.updateFilm(film);
 
         Set<Genre> genres = film.getGenres();
-        genreToFilmsStorage.deleteAllGenresToFilm(film.getId());
         if (genres != null) {
+            genreToFilmsStorage.deleteAllGenresToFilm(film.getId());
             for (Genre genre : genres) {
                 if (!genreToFilmsStorage.checkGenreToFilm(genre.getId(), film.getId())) {
                     genreToFilmsStorage.addGenreToFilm(genre.getId(), film.getId());
@@ -143,8 +143,8 @@ public class FilmService {
         }
 
         Set<Director> directors = film.getDirectors();
-        directorToFilmsStorage.deleteAllDirectorsToFilm(film.getId());
         if (directors != null) {
+            directorToFilmsStorage.deleteAllDirectorsToFilm(film.getId());
             for (Director director : directors) {
                 if (!directorToFilmsStorage.checkDirectorToFilm(director.getId(), film.getId())) {
                     directorToFilmsStorage.addDirectorToFilm(director.getId(), film.getId());
