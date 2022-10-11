@@ -8,4 +8,6 @@ public interface LikesStorage {
     Film removeLikeFilm(int filmId, int userId);
 
     void deleteLikeFilmById(int filmId);
+
+    void fillFilmLikeListForFilm(Film film);
 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.feed.Feed;
 import ru.yandex.practicum.model.reviews.Reviews;
+import ru.yandex.practicum.storage.reviews.DislikesReviewsStorage;
+import ru.yandex.practicum.storage.reviews.LikesReviewsStorage;
 import ru.yandex.practicum.storage.reviews.ReviewsStorage;
 import ru.yandex.practicum.storage.feed.FeedStorage;
 
@@ -18,6 +20,8 @@ public class ReviewsService {
     private final ReviewsStorage reviewsStorage;
     private final ReviewValidationService reviewValidationService;
     private final FeedStorage feedStorage;
+    private final LikesReviewsStorage likesReviewsStorage;
+    private final DislikesReviewsStorage dislikesReviewsStorage;
 
     public Reviews addReviews (Reviews review) {
         Reviews newReview = reviewsStorage.addReviews(review);
@@ -72,7 +76,13 @@ public class ReviewsService {
     public Reviews addLikeReviews(int reviewsId, int userId) {
         reviewValidationService.checkUserId(userId);
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
-        reviewsStorage.addLikeReviews(reviewsId, userId);
+        if (likesReviewsStorage.checkLike(reviewsId, userId)) {
+            throw new ValidationException("Лайк уже поставлен");
+        }
+        if (dislikesReviewsStorage.checkDislike(reviewsId, userId)) {
+            throw new ValidationException("Дизлайк уже поставлен");
+        }
+        likesReviewsStorage.addLikeReviews(reviewsId, userId);
         reviews.addLike();
         return reviewsStorage.updateUseful(reviews);
     }
@@ -80,7 +90,13 @@ public class ReviewsService {
     public Reviews addDislikeReviews(int reviewsId, int userId) {
         reviewValidationService.checkUserId(userId);
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
-        reviewsStorage.addDislikeReviews(reviewsId, userId);
+        if (likesReviewsStorage.checkLike(reviewsId, userId)) {
+            throw new ValidationException("Лайк уже поставлен");
+        }
+        if (dislikesReviewsStorage.checkDislike(reviewsId, userId)) {
+            throw new ValidationException("Дизлайк уже поставлен");
+        }
+        dislikesReviewsStorage.addDislikeReviews(reviewsId, userId);
         reviews.addDislike();
         return reviewsStorage.updateUseful(reviews);
     }
@@ -88,7 +104,10 @@ public class ReviewsService {
     public Reviews deleteLikeReviews(int reviewsId, int userId) {
         reviewValidationService.checkUserId(userId);
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
-        reviewsStorage.deleteLikeReviews(reviewsId, userId);
+        if (!likesReviewsStorage.checkLike(reviewsId, userId)) {
+            throw new ValidationException("Лайк отсутствует");
+        }
+        likesReviewsStorage.deleteLikeReviews(reviewsId, userId);
         reviews.deleteLike();
         return reviewsStorage.updateUseful(reviews);
     }
@@ -96,7 +115,10 @@ public class ReviewsService {
     public Reviews deleteDislikeReviews(int reviewsId, int userId) {
         reviewValidationService.checkUserId(userId);
         Reviews reviews = reviewsStorage.getReviewsById(reviewsId);
-        reviewsStorage.deleteDislikeReviews(reviewsId, userId);
+        if (!dislikesReviewsStorage.checkDislike(reviewsId, userId)) {
+            throw new ValidationException("Лайк отсутствует");
+        }
+        dislikesReviewsStorage.deleteDislikeReviews(reviewsId, userId);
         reviews.deleteDislike();
         return reviewsStorage.updateUseful(reviews);
     }

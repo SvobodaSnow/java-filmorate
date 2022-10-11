@@ -9,6 +9,11 @@ import ru.yandex.practicum.model.film.Film;
 import ru.yandex.practicum.storage.film.FilmDbStorage;
 import ru.yandex.practicum.storage.user.UserDbStorage;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+
 @Slf4j
 @Primary
 @Component
@@ -56,5 +61,23 @@ public class LikesDbStorage implements LikesStorage {
     public void deleteLikeFilmById(int filmId) {
         String sql = "DELETE FROM likes WHERE film_id = ?";
         jdbcTemplate.update(sql, filmId);
+    }
+
+    @Override
+    public void fillFilmLikeListForFilm(Film film) {
+        film.setLikedUsers(new HashSet<>(fillFilmLikeList(film.getId())));
+    }
+
+    private List<Integer> fillFilmLikeList(int id) {
+        String sql = "SELECT user_id FROM likes WHERE film_id = ?";
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> getFilmLikeId(rs),
+                id
+        );
+    }
+
+    private int getFilmLikeId(ResultSet rs) throws SQLException {
+        return rs.getInt("user_id");
     }
 }

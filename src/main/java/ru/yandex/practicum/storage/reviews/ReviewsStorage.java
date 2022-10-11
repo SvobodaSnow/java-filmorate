@@ -18,12 +18,4 @@ public interface ReviewsStorage {
     List<Reviews> getAllReviews();
 
     List<Reviews> getReviewsListByFlmId(int filmId, int count);
-
-    void addLikeReviews(int reviewsId, int userId);
-
-    void addDislikeReviews(int reviewsId, int userId);
-
-    void deleteLikeReviews(int reviewsId, int userid);
-
-    void deleteDislikeReviews(int reviewsId, int userId);
 }

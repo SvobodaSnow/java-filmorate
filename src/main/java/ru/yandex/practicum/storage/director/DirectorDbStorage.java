@@ -1,6 +1,7 @@
 package ru.yandex.practicum.storage.director;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -8,10 +9,14 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.exceptions.NotFoundException;
 import ru.yandex.practicum.exceptions.ValidationException;
 import ru.yandex.practicum.model.director.Director;
+import ru.yandex.practicum.model.film.Film;
+import ru.yandex.practicum.storage.film.DirectorToFilmsStorage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Slf4j
@@ -20,7 +25,8 @@ import java.util.List;
 public class DirectorDbStorage implements DirectorStorage{
 
     private final JdbcTemplate jdbcTemplate;
-
+    @Autowired
+    private DirectorToFilmsStorage directorToFilmsStorage;
 
     public DirectorDbStorage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -83,6 +89,15 @@ public class DirectorDbStorage implements DirectorStorage{
         jdbcTemplate.update(sql, id);
         sql = "DELETE FROM director_to_films WHERE director_id = ? ";
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public void fillDirectorsForFilm(Film film) {
+        Set<Director> directors = new HashSet<>();
+        for (Integer directorId : directorToFilmsStorage.fillDirectorsListId(film.getId())) {
+            directors.add(getDirectorById(directorId));
+        }
+        film.setDirectors(directors);
     }
 
     private Director makeDirector(ResultSet rs) throws SQLException {

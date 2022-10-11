@@ -105,6 +105,13 @@ public class ReviewsDbStorage implements ReviewsStorage {
         return jdbcTemplate.query(sql, (rs, rowNum) -> makeReviews(rs));
     }
 
+    @Override
+    public List<Reviews> getReviewsListByFlmId(int filmId, int count) {
+        reviewValidationService.checkFilmId(filmId);
+        String sql = "SELECT * FROM reviews WHERE film_id = ? ORDER BY useful DESC LIMIT ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeReviews(rs), filmId, count);
+    }
+
     private Reviews makeReviews(ResultSet rs) throws SQLException {
         Reviews reviews = new Reviews();
         reviews.setReviewId(rs.getInt("review_id"));
@@ -114,66 +121,5 @@ public class ReviewsDbStorage implements ReviewsStorage {
         reviews.setFilmId(rs.getInt("film_id"));
         reviews.setUseful(rs.getInt("useful"));
         return reviews;
-    }
-
-    @Override
-    public List<Reviews> getReviewsListByFlmId(int filmId, int count) {
-        reviewValidationService.checkFilmId(filmId);
-        String sql = "SELECT * FROM reviews WHERE film_id = ? ORDER BY useful DESC LIMIT ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> makeReviews(rs), filmId, count);
-    }
-
-    @Override
-    public void addLikeReviews(int reviewsId, int userId) {
-        String sql = "SELECT * FROM likes_reviews WHERE review_id = ? AND user_id = ?";
-        SqlRowSet reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (reviewsRow.next()) {
-            throw new ValidationException("Лайк уже поставлен");
-        }
-        sql = "SELECT * FROM dislikes_reviews WHERE review_id = ? AND user_id = ?";
-        reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (reviewsRow.next()) {
-            throw new ValidationException("Дизлайк уже поставлен");
-        }
-        sql = "INSERT INTO likes_reviews (review_id, user_id) VALUES (?, ?)";
-        jdbcTemplate.update(sql, reviewsId, userId);
-    }
-
-    @Override
-    public void addDislikeReviews(int reviewsId, int userId) {
-        String sql = "SELECT * FROM likes_reviews WHERE review_id = ? AND user_id = ?";
-        SqlRowSet reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (reviewsRow.next()) {
-            throw new ValidationException("Лайк уже поставлен");
-        }
-        sql = "SELECT * FROM dislikes_reviews WHERE review_id = ? AND user_id = ?";
-        reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (reviewsRow.next()) {
-            throw new ValidationException("Дизлайк уже поставлен");
-        }
-        sql = "INSERT INTO dislikes_reviews (review_id, user_id) VALUES (?, ?)";
-        jdbcTemplate.update(sql, reviewsId, userId);
-    }
-
-    @Override
-    public void deleteLikeReviews(int reviewsId, int userId) {
-        String sql = "SELECT * FROM likes_reviews WHERE review_id = ? AND user_id = ?";
-        SqlRowSet reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (!reviewsRow.next()) {
-            throw new ValidationException("Лайк отсутствует");
-        }
-        sql = "DELETE FROM likes_reviews WHERE review_id = ? AND user_id = ?";
-        jdbcTemplate.update(sql, reviewsId, userId);
-    }
-
-    @Override
-    public void deleteDislikeReviews(int reviewsId, int userId) {
-        String sql = "SELECT * FROM dislikes_reviews WHERE review_id = ? AND user_id = ?";
-        SqlRowSet reviewsRow = jdbcTemplate.queryForRowSet(sql, reviewsId, userId);
-        if (!reviewsRow.next()) {
-            throw new ValidationException("Дизлайк отсутствует");
-        }
-        sql = "DELETE FROM dislikes_reviews WHERE review_id = ? AND user_id = ?";
-        jdbcTemplate.update(sql, reviewsId, userId);
     }
 }

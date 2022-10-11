@@ -31,13 +31,7 @@ public class UserDbStorage implements UserStorage {
     @Override
     public List<User> findAll() {
         String sql = "SELECT * FROM users";
-        List<User> users = jdbcTemplate.query(sql, (rs, rowNum) -> makeUser(rs));
-        for (User user : users) {
-            fillFriendsListForUser(user);
-            fillSentFriendshipRequests(user);
-            fillReceivedFriendshipRequests(user);
-        }
-        return users;
+        return jdbcTemplate.query(sql, (rs, rowNum) -> makeUser(rs));
     }
 
     @Override
@@ -70,16 +64,6 @@ public class UserDbStorage implements UserStorage {
     }
 
     @Override
-    public List<User> findAllFriends(int id) {
-        List<Integer> friendsIdList = fillFriendsList(id);
-        List<User> friendsList = new ArrayList<>();
-        for (Integer friendId : friendsIdList) {
-            friendsList.add(getUserById(friendId));
-        }
-        return friendsList;
-    }
-
-    @Override
     public User getUserById(int id) {
         String sql = "SELECT * FROM users WHERE user_id = ?";
         SqlRowSet userRows = jdbcTemplate.queryForRowSet(sql, id);
@@ -94,69 +78,7 @@ public class UserDbStorage implements UserStorage {
             log.error("Получен запрос на обновление пользовактеля с ID " + id + ", которого нет в базе данных");
             throw new NotFoundException("Пользователя нет в списке");
         }
-        fillFriendsListForUser(user);
-        fillSentFriendshipRequests(user);
-        fillReceivedFriendshipRequests(user);
         return user;
-    }
-
-    @Override
-    public User addUserFriend(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        String sqlAddFriend = "INSERT INTO friends (user_id, friend_id) VALUES (?, ?)";
-        jdbcTemplate.update(sqlAddFriend, userId, friendId);
-        return getUserById(userId);
-    }
-
-    @Override
-    public User deleteUserFriend(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        String sqlDeleteFriend = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
-        jdbcTemplate.update(sqlDeleteFriend, userId, friendId);
-        return getUserById(userId);
-    }
-
-    @Override
-    public User sendFriendRequest(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        String sqlAddRequestFriend = "INSERT INTO unconfirmed_requests (user_id, friend_id) VALUES (?, ?)";
-        jdbcTemplate.update(sqlAddRequestFriend, userId, friendId);
-        String sqlAddFriend = "INSERT INTO friends (user_id, friend_id) VALUES (?, ?)";
-        jdbcTemplate.update(sqlAddFriend, userId, friendId);
-        return getUserById(userId);
-    }
-
-    @Override
-    public User deleteFriendRequest(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        String sqlDeleteFriend = "DELETE FROM unconfirmed_requests WHERE user_id = ? AND friend_id = ?";
-        jdbcTemplate.update(sqlDeleteFriend, userId, friendId);
-        sqlDeleteFriend = "DELETE FROM friends WHERE user_id = ? AND friend_id = ?";
-        jdbcTemplate.update(sqlDeleteFriend, userId, friendId);
-        return getUserById(userId);
-    }
-
-    @Override
-    public User confirmFriendRequest(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        deleteFriendRequest(friendId, userId);
-        addUserFriend(userId, friendId);
-        addUserFriend(friendId, userId);
-        return getUserById(userId);
-    }
-
-    @Override
-    public boolean checkRequestFriend(int userId, int friendId) {
-        getUserById(userId);
-        getUserById(friendId);
-        String sql = "SELECT * FROM unconfirmed_requests WHERE user_id = ? AND friend_id = ?";
-        SqlRowSet userRows = jdbcTemplate.queryForRowSet(sql, userId, friendId);
-        return userRows.next();
     }
 
     @Override
@@ -164,26 +86,6 @@ public class UserDbStorage implements UserStorage {
         getUserById(userId);
         String sql = "DELETE FROM users WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
-    }
-
-    @Override
-    public void deleteAllFriendsUserById(int userId) {
-        String sql = "DELETE FROM friends WHERE user_id = ? OR friend_id = ?";
-        jdbcTemplate.update(sql, userId, userId);
-    }
-
-    @Override
-    public void deleteAllRequestsFriends(int userId) {
-        String sql = "DELETE FROM unconfirmed_requests WHERE user_id = ? OR friend_id = ?";
-        jdbcTemplate.update(sql, userId, userId);
-    }
-
-    private int getFriendsId(ResultSet rs) throws SQLException {
-        return rs.getInt("friend_id");
-    }
-
-    private int getReceivedFriendshipRequests(ResultSet rs) throws SQLException {
-        return rs.getInt("user_id");
     }
 
     private User makeUser(ResultSet rs) throws SQLException {
@@ -194,39 +96,6 @@ public class UserDbStorage implements UserStorage {
         user.setName(rs.getString("name"));
         user.setBirthday(rs.getDate("birthday").toLocalDate());
         return user;
-    }
-
-    private void fillFriendsListForUser(User user) {
-        user.setFriends(new HashSet<>(fillFriendsList(user.getId())));
-    }
-
-    private void fillSentFriendshipRequests(User user) {
-        String sql = "SELECT friend_id FROM unconfirmed_requests WHERE user_id = ?";
-        List<Integer> sentFriendshipRequests = jdbcTemplate.query(
-                sql,
-                (rs, rowNum) -> getFriendsId(rs),
-                user.getId()
-        );
-        user.setSentFriendshipRequests(new HashSet<>(sentFriendshipRequests));
-    }
-
-    private void fillReceivedFriendshipRequests(User user) {
-        String sql = "SELECT user_id FROM unconfirmed_requests WHERE friend_id = ?";
-        List<Integer> receivedFriendshipRequests = jdbcTemplate.query(
-                sql,
-                (rs, rowNum) -> getReceivedFriendshipRequests(rs),
-                user.getId()
-        );
-        user.setReceivedFriendshipRequests(new HashSet<>(receivedFriendshipRequests));
-    }
-
-    private List<Integer> fillFriendsList(int id) {
-        String sql = "SELECT friend_id FROM friends WHERE user_id = ?";
-        return jdbcTemplate.query(
-                sql,
-                (rs, rowNum) -> getFriendsId(rs),
-                id
-        );
     }
 
     private void checkUserValidation(User user) {
